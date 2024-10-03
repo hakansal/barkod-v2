@@ -1,0 +1,56 @@
+.girisbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.inputbox {
+    width: 1000px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    border: solid 0.01px black;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+}
+
+.formdiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 80px
+}
+
+.buttondiv {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.input {
+    height: 30px;
+    width: 250px;
+}
+
+.label {
+    font-family: "Times New Roman", Times, serif;
+    font-size: x-large;
+}
+
+.button {
+    height: 30px;
+    width: 100px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: large;
+}
