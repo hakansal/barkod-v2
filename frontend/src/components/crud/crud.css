@@ -1,0 +1,37 @@
+.maincrud{
+    margin-top: 50px;
+    display:flex;
+    flex-direction: row;
+    height: 100%;
+    width:100vw;
+    gap:20px;
+    align-items: center;
+    justify-content: center;
+   
+}
+.form{
+    gap:40px;
+}
+.divdorm{
+    display: flex;
+    flex-direction: row;
+     gap:20px;
+    justify-content: space-between;
+}
+.divbutton{
+    display: flex;
+    flex-direction: row;
+     
+    justify-content: space-between;
+}
+
+.crudinput{
+    display:flex;
+    flex-direction: column;
+    height: auto;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+    
+}
+ 

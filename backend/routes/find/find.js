@@ -4,7 +4,7 @@ const Items = require("../../Db/models/items");
 const tokencheck=require("../tokencheck");
 
 
-router.get("/bul",tokencheck, async (req, res) => {
+router.post("/bul",tokencheck, async (req, res) => {
     try {
         const {barkod}=req.body;
         const item = await Items.findOne({barkod:barkod});

@@ -1,7 +1,6 @@
 const express=require("express");
-express.Router();
+const router =express.Router();
 const Items =require("../../Db/models/items");
-const router = require("../kayit/kayit");
 const tokencheck=require("../tokencheck");
 
 router.delete("/sil",tokencheck,async(req,res)=>{
@@ -16,7 +15,7 @@ router.delete("/sil",tokencheck,async(req,res)=>{
       };
       if(item){
           await Items.deleteOne({barkod:barkod});
-          return res.status(400).json(" silindi");
+          return res.status(200).json(" silindi");
 
       }
   

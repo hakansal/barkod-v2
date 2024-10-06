@@ -1,0 +1,36 @@
+.mainsil{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    width:100vw;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+
+}
+.sorgu{
+    width: 600px;
+    height: auto;
+
+}
+.formsil{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+}
+.form{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.responsesil{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    height: auto;
+}

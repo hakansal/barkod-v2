@@ -20,7 +20,7 @@ router.post("/guncelle",tokencheck, async (req, res) => {
         if (item) {
             await item.updateOne({ adet: adet, isim: isim, fiyat: fiyat });
             item.save();
-            res.status(500).json("güncelleme yapıldu");
+            res.status(200).json("güncelleme yapıldu");
 
         };
     } catch (err) {
