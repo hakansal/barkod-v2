@@ -1,0 +1,41 @@
+.mainlist{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: auto;
+    gap:20px;
+}
+
+.displaylist{
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    height: auto; 
+    align-items: center;
+    justify-content: center;
+    gap:20px;
+    background-color: aliceblue;
+    overflow-y:scroll;
+    border: 1px solid black;
+    box-shadow: 1px 3px 5px;
+}
+.listinfo{  display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: auto; 
+    align-items: center;
+    justify-content: center;
+    gap:20px;
+    background-color: aliceblue;
+    border: 1px solid black;
+    box-shadow: 1px 3px 5px;}
+.list{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+   
+    width: 500px;
+}

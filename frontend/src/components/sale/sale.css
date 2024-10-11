@@ -8,6 +8,13 @@
     gap:20px;
     
 }
+.sale{
+    display: flex;
+    flex-direction: column;
+    height: 800px;
+    width: 600px; 
+  
+}
 
 .saleinput{
     display: flex;
@@ -17,6 +24,9 @@
     align-items: center;
     justify-content: center;
     gap:20px;
+    background-color: aliceblue;
+    border :solid 1px;
+    box-shadow: 3px 3px 3px gray;
 }
 
 .listitems{
@@ -24,12 +34,33 @@
     display :flex;
     flex-direction: column;
     height: 100%;
-    width: 800px;
+    width: 600px;
     align-items: center;
     justify-content: center;
     overflow-y: auto;
+    background-color: aliceblue;
+    border: 1px solid black;
+    box-shadow: 1px 3px 5px;
     
-}.listitem{
+}
+.buut{
+    display: flex;
+    width: 250px;
+    height: auto;
+    justify-content: space-between;
+}
+.sales{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    background-color:rgb(200, 245, 230) ;
+    
+    
+}
+.listitem{
     display:flex;
     flex-direction: row;
     gap:20px;
@@ -40,6 +71,7 @@
     display :flex;
     flex-direction: column;
     gap:20px;
+   
 }
 .buttonitem{
     color: red;

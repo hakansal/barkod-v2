@@ -18,6 +18,9 @@ const senddata=async(e)=>{
  e.preventDefault();
 
   try {
+    if(!barkod||!isim||!adet||!fiyat){
+        alert("verileri ekle")
+    }
       const response =await axios({
           method:"post",
           data:data,

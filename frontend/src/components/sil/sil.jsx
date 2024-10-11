@@ -20,7 +20,7 @@ const Sil = () => {
                 url: "http://localhost:3001/serverapp/bul"
             });
             if (response) {
-                setresponse(response.data);
+                setresponse(response.data.item);
                 alert("eminmisin")
             }
         } catch (error) {
@@ -62,7 +62,10 @@ const Sil = () => {
 
             </div>
             <div className="responsesil">
+                <div className="listitem">
                 <p>{`ürün:${responsil.isim} fiyatı:${responsil.fiyat}`}</p>
+                    
+                </div>
                 <button className="button" onClick={deleteresponse}> sil</button>
             </div>
 

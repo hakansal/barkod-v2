@@ -1,6 +1,7 @@
 const express = require("express");
 const Items = require("../../Db/models/items");
 const tokencheck = require("../tokencheck");
+ 
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.post("/satis", tokencheck, async (req, res) => {
 
     for (let i = 0; i < items.length; i++) {
       const item = await Items.findOne({ barkod: items[i] });
+    
 
       if (!item) {
         return res.status(404).json({ message: `Ürün bulunamadı: ${items[i]}` });
@@ -22,7 +24,7 @@ router.post("/satis", tokencheck, async (req, res) => {
       if (item.adet <= 0) {
         return res.status(400).json({ message: `Stokta yeterli adet yok: ${item.barkod}` });
       }
-
+    
       item.adet -= 1;  
       await item.save(); 
     }

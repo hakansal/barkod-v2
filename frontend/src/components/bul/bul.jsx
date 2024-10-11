@@ -10,36 +10,54 @@ const Bul = () => {
     }
     const getresponse = async (e) => {
         e.preventDefault();
-        const response = await axios({
-            method: "post",
-            data: data,
-            url: "http://localhost:3001/serverapp/bul",
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-        });
-        if (!response) {
-            alert("hata");
 
-        }
-        else{
+        try {
+            if (barkod == null) {
+                return alert("barkod ekleyiniz");
+            }
+            const response = await axios({
+                method: "post",
+                data: data,
+                url: "http://localhost:3001/serverapp/bul",
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+            });
+            if (!response) {
+                return alert("hata");
 
-            console.log(response);
-            setserverresponse(response.data);
+            }
+            if (response) {
+
+                return setserverresponse(response.data.item);
+            }
+            else {
+
+                return alert("hata")
+            }
+        } catch (error) {
+          return  alert(error);
         }
     };
     return <div>
         <div className="bulmain">
             <div className="bulinput">
-                <form onSubmit={getresponse} >
+                <form className="form" onSubmit={getresponse} >
 
-                    <label className="label">barkod</label>
-                    <input onChange={(e) => setbarkod(e.target.value)} className="input" type="text"></input>
+                    <div>
+                        <label className="label">barkod </label>
+                        <input onChange={(e) => setbarkod(e.target.value)} className="input" type="text"></input>
+                    </div>
                     <button className="button"> bul</button>
                 </form>
-                 
+
 
             </div>
             <div className="bulresponse">
-               {`${serverresponse.isim}  adet ${serverresponse.adet}  fiyatı ${serverresponse.fiyat}`}
+                <div className="">
+
+                    {`${serverresponse.isim}  adet ${serverresponse.adet}  fiyatı ${serverresponse.fiyat}`}
+
+
+                </div>
             </div>
 
         </div>

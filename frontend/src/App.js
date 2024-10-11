@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App"> 
       {location.pathname !== "/" && <Navbar />}
-      
+       
       <Routes>
         <Route path="/" element={<Giris />} />
         <Route path="/mainscreen" element={<Mainscreen />} />

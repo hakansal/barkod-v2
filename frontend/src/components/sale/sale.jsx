@@ -6,6 +6,7 @@ const Sale = () => {
     const [barkod, setbarkod] = useState("");
     const [items, setitems] = useState([]);
     const [saleitems, setsaleitems] = useState([]);
+    const [price, setprice] = useState(0);
     const saledata = {
         items: saleitems
     }
@@ -33,6 +34,8 @@ const Sale = () => {
                 } else {
                     alert("Ürün bulunamadı.");
                 }
+                const newprice = price + response.data.fiyat;
+                setprice(newprice)
             }
         } catch (error) {
             console.error("Error fetching item:", error);
@@ -58,42 +61,64 @@ const Sale = () => {
             console.error("Error making sale:", error);
         }
     };
-    
+  const saleiptal=()=>{
+    const updatedItems=[];
+    setitems(updatedItems);
+    setprice(0);
+  }
+    const deleteitem = (index) => {
+        const updatedItems = items.filter((item, i) => i !== index);
+        setitems(updatedItems);
+
+        const updatedSaleItems = saleitems.filter((_, i) => i !== index);
+        setsaleitems(updatedSaleItems);
+        const newprice = price - items[index].fiyat;
+        setprice(newprice)
+    };
+
 
     return (
         <div>
             <div className="mainsale">
-                <div className="saleinput">
-                    <form onSubmit={getitem}>
-                        <input
-                            className="input"
-                            type="text"
-                            value={barkod}
-                            onChange={(e) => setbarkod(e.target.value)}
-                            placeholder="Barkod giriniz"
-                        />
-                        <button className="button" type="submit">
-                            Gönder
-                        </button>
-                    </form>
+                <div className="sale">
+                    <div className="saleinput">
+                        <form onSubmit={getitem}>
+                            <input
+                                className="input"
+                                type="text"
+                                value={barkod}
+                                onChange={(e) => setbarkod(e.target.value)}
+                                placeholder="Barkod giriniz"
+                            />
+                            <button className="button" type="submit">
+                                Gönder
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <div className="listitems">
+
+                    <div className="buut ">
+                        <button className="button" onClick={saleitem}>Satış</button>
+                        <button className="button" onClick={saleiptal}>iptal</button></div>
                     <ul className="ul">
                         {items.map((item, index) =>
                             item && item.isim ? (
                                 <div className="listitem">
                                     <li key={index}>{`Ürün: ${item.isim}, Fiyat: ${item.fiyat}`}</li>
-                                    <button key={index}  className="buttonitem">çıkar</button>
+                                    <button key={index} onClick={() => deleteitem(index)} className="buttonitem">çıkar</button>
                                 </div>
                             ) : (
                                 <li key={index}>Ürün bilgisi bulunamadı</li>
                             )
                         )}
                     </ul>
-                    <button className="button" onClick={saleitem}>
-                        Satış
-                    </button>
+
+                </div>
+                <div className="sales">
+                    <label className="label">{`Toplam :${price} TL`}</label>
+
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@
     justify-content: center;
     width: 100vw;
     height: auto;
+    
 }
 .inputupdate{
     display: flex;
@@ -13,7 +14,10 @@
     align-items: center;
     justify-content: center;
     width: 600px;
-    height: auto;
+    height: 400px;
+    background-color: aliceblue;
+    border :solid 1px;
+    box-shadow: 3px 3px 3px gray;
     
 }
 .divinput{

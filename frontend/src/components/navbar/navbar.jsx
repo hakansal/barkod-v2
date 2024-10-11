@@ -15,34 +15,34 @@ const Navbar = () => {
 
     return <div>
         <div className="nav">
-            <div>
-                <div>
-                    <Link to="mainscreen"><h1>Bahçekent</h1></Link>
+            <div className="buttonlogo">
+                <div className="navbutton" >
+                    <Link className="link" to="mainscreen">< a className=" al">Bahçekent AVM</ a></Link>
                 </div>
             </div>
             <div className="buttonr">
                 <div>
-                    <Link to="/satis"><h3>satış</h3></Link>
+                    <Link className="link"  to="/satis">< a className="a">satış</ a></Link>
                 </div>
                 <div>
-                    <Link to="/liste"><h3>listele</h3></Link>
+                    <Link className="link" to="/liste">< a className="a">listele</ a></Link>
                 </div>
                 <div>
-                    <Link to="/bul"><h3>bul</h3></Link>
+                    <Link className="link" to="/bul">< a className="a">bul</ a></Link>
                 </div>
                 <div>
-                    <Link to="/urunekleme"><h3>kayıt</h3></Link>
+                    <Link className="link" to="/urunekleme">< a className="a">kayıt</ a></Link>
                 </div>
                 <div>
-                    <Link to="/silme"><h3>sil</h3></Link>
+                    <Link className="link" to="/silme">< a className="a">sil</ a></Link>
                 </div>
                 <div>
-                    <Link to="/guncelle"><h3>güncelle</h3></Link>
+                    <Link className="link"  to="/guncelle">< a className="a">güncelle</ a></Link>
                 </div>
                 
                 <div>
 
-                    <button onClick={logout} className="button">çıkış</button>
+                   <Link  className="link" to="/">< a className="a ck"onClick={logout}>çıkış</ a></Link>
 
                 </div>
             </div>
