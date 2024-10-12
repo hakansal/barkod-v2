@@ -1,7 +1,8 @@
 const express = require("express");
 const Items = require("../../Db/models/items");
 const tokencheck = require("../tokencheck");
- 
+const Salereg =require("../../Db/models/salereg");
+require('date-fns');
 
 const router = express.Router();
 
@@ -27,6 +28,9 @@ router.post("/satis", tokencheck, async (req, res) => {
     
       item.adet -= 1;  
       await item.save(); 
+      const date=  new Date().toLocaleDateString();
+      const salereg= await Salereg.create({gun:date,items:item})
+      salereg.save();
     }
 
     return res.status(200).json("Satış yapıldı");

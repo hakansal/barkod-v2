@@ -24,17 +24,17 @@ const Sale = () => {
                 url: "http://localhost:3001/serverapp/bul",
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-            if (response && response.data) {
-                if (response.data.barkod) {
-                    setsaleitems((prevItems) => [...prevItems, response.data.barkod]);
+            if (response && response.data.item) {
+                if (response.data.item.barkod) {
+                    setsaleitems((prevItems) => [...prevItems, response.data.item.barkod]);
                 }
 
-                if (response.data.isim) {
-                    setitems((prevItems) => [...prevItems, response.data]);
+                if (response.data.item.isim) {
+                    setitems((prevItems) => [...prevItems, response.data.item]);
                 } else {
                     alert("Ürün bulunamadı.");
                 }
-                const newprice = price + response.data.fiyat;
+                const newprice = price + response.data.item.fiyat;
                 setprice(newprice)
             }
         } catch (error) {
