@@ -53,12 +53,14 @@ const Sale = () => {
                 url: "http://localhost:3001/serverapp/satis",
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-
+            console.log(response)
             if (response) {
                 alert("Satış yapıldı");
+               saleiptal();
             }
         } catch (error) {
-            console.error("Error making sale:", error);
+            alert("Error making sale:", error);
+            console.log(error);
         }
     };
   const saleiptal=()=>{

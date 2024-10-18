@@ -1,20 +1,24 @@
-const mongoose =require("mongoose")
+const mongoose = require("mongoose");
 
-
-const Salereg=new mongoose.Schema({
-
-    gun:{
-        type:Date,
-        required:true,
-        unique:true
+const Salereg = new mongoose.Schema({
+  gun: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  satislar: [
+    {
+      satis: 
+        {
+          type: String,  
+          required: true,
+          urunler:[
+            
+          ]
+        },
+      
     },
+  ],
+});
 
-    items:[{
-        type:String,
-        required:true,
-
-    }]
-})
-
-
-module.exports=mongoose.model("Salereg",Salereg);
+module.exports = mongoose.model("Salereg", Salereg);
