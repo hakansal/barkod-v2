@@ -19,12 +19,7 @@ const Items = new mongoose.Schema({
         type: Number,
         required: true
     },
-    list: [
-        {
-            type: mongoose.SchemaTypes.ObjectId,
-            ref:"Iteminfo"
-
-        }]
+    
 
 
 })

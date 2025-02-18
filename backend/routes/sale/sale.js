@@ -1,8 +1,7 @@
 const express = require("express");
 const Items = require("../../Db/models/items");
 const tokencheck = require("../tokencheck");
-const Salereg = require("../../Db/models/salereg");
-require('date-fns');
+const Satismodel = require("../../Db/models/gunlukkayit");
 
 const router = express.Router();
 
@@ -11,49 +10,53 @@ router.post("/satis", tokencheck, async (req, res) => {
     const { items } = req.body;
 
     if (!items || items.length === 0) {
-      return res.status(400).json("Veri eklemediniz");
+      return res.status(400).json({ message: "Veri eklemediniz" });
     }
 
-    for (let i = 0; i < items.length; i++) {
-      const item = await Items.findOne({ barkod: items[i] });
-
+    // 1️⃣ Ürünleri Kontrol Et ve Stoktan Düş
+    const satislar = [];
+    for (const barkod of items) {
+      const item = await Items.findOne({ barkod });
       if (!item) {
-        return res.status(404).json({ message: `Ürün bulunamadı: ${items[i]}` });
+        return res.status(404).json({ message: `Ürün bulunamadı: ${barkod}` });
       }
-
       if (item.adet <= 0) {
-        return res.status(400).json({ message: `Stokta yeterli adet yok: ${item.barkod}` });
+        return res.status(400).json({ message: `Stokta yeterli adet yok: ${barkod}` });
       }
 
-      // Stoktan bir adet düş
-      item.adet -= 1;  
+      // Stoktan 1 adet düş
+      item.adet -= 1;
       await item.save();
+
+      // Satış kaydı için veri hazırla
+      satislar.push({
+        barkod: item.barkod,
+        isim: item.isim,
+        fiyat: item.fiyat
+      });
     }
 
-    // Satış günü için kayıt kontrolü
-    const date = new Date().toLocaleDateString();
-    let checksalereg = await Salereg.findOne({ gun: date });
+    // 2️⃣ Günlük Kaydı Kontrol Et veya Oluştur
+    const today = new Date();
+    const todayStr = today.toDateString();
 
-    if (!checksalereg) {
-      // Gün için kayıt yoksa yeni kayıt oluştur
-      checksalereg = await Salereg.create({ gun: date, satislar: [{ satis: items }] });
-      await checksalereg.save();
-      return res.status(201).json({ message: "Yeni satış kaydı oluşturuldu", data: checksalereg });
+    let gkayit = await Satismodel.findOne({ gun: { $gte: new Date(todayStr) } });
+
+    if (gkayit) {
+      // Aynı güne satış ekle
+      gkayit.satislar.push(...satislar);
+      await gkayit.save();
     } else {
-      // Mevcut kayda ürünleri ekle
-      await checksalereg.updateOne(
-        { gun: date }, // Belirli bir günü arıyoruz
-        { 
-          $push: { satislar: { satis: items } } // items dizisini satis dizisine ekliyoruz
-        },
-        { new: true }
-      );
-
-      return res.status(200).json({ message: "Satış kaydı güncellendi", data: checksalereg });
+      // Yeni günlük kayıt oluştur
+      await Satismodel.create({ gun: today, satislar });
     }
+
+    // ✅ Başarılı Satış Mesajı
+    res.status(200).json({ message: "Satış başarıyla tamamlandı", satislar });
 
   } catch (error) {
-    return res.status(500).json({ message: "Sunucu hatası", error: error.message });
+    console.error("Satış hatası:", error);
+    res.status(500).json({ message: "Sunucu hatası", error: error.message });
   }
 });
 

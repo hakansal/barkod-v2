@@ -3,125 +3,108 @@ import "./sale.css";
 import axios from "axios";
 
 const Sale = () => {
-    const [barkod, setbarkod] = useState("");
-    const [items, setitems] = useState([]);
-    const [saleitems, setsaleitems] = useState([]);
-    const [price, setprice] = useState(0);
-    const saledata = {
-        items: saleitems
-    }
+    const [barkod, setBarkod] = useState("");
+    const [items, setItems] = useState([]);
+    const [saleItems, setSaleItems] = useState([]);
+    const [price, setPrice] = useState(0);
 
-    const data = {
-        barkod: barkod,
-    };
-
-    const getitem = async (e) => {
+    const getItem = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios({
-                method: "post",
-                data: data,
-                url: "http://localhost:3001/serverapp/bul",
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            });
+            const response = await axios.post(
+                "http://localhost:3001/serverapp/bul",
+                { barkod },
+                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+            );
+
             if (response && response.data.item) {
-                if (response.data.item.barkod) {
-                    setsaleitems((prevItems) => [...prevItems, response.data.item.barkod]);
+                const item = response.data.item;
+                
+                if (item.barkod) {
+                    setSaleItems((prevItems) => [...prevItems, item.barkod]);
                 }
 
-                if (response.data.item.isim) {
-                    setitems((prevItems) => [...prevItems, response.data.item]);
+                if (item.isim) {
+                    setItems((prevItems) => [...prevItems, item]);
+                    setPrice((prevPrice) => prevPrice + item.fiyat);
                 } else {
                     alert("Ürün bulunamadı.");
                 }
-                const newprice = price + response.data.item.fiyat;
-                setprice(newprice)
             }
         } catch (error) {
-            console.error("Error fetching item:", error);
+            console.error("Ürün getirirken hata oluştu:", error);
         }
     };
 
-    const saleitem = async () => {
+    const saleItem = async () => {
         if (items.length === 0) {
             return alert("Lütfen ürün ekleyiniz");
         }
+
         try {
-            const response = await axios({
-                method: "post",
-                data: saledata,
-                url: "http://localhost:3001/serverapp/satis",
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            });
-            console.log(response)
+            const response = await axios.post(
+                "http://localhost:3001/serverapp/satis",
+                { items: saleItems },
+                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+            );
+
             if (response) {
                 alert("Satış yapıldı");
-               saleiptal();
+                saleIptal(); // Satıştan sonra listeyi temizle
             }
         } catch (error) {
-            alert("Error making sale:", error);
-            console.log(error);
+            alert("Satış işlemi sırasında hata oluştu.");
+            console.error(error);
         }
     };
-  const saleiptal=()=>{
-    const updatedItems=[];
-    setitems(updatedItems);
-    setprice(0);
-  }
-    const deleteitem = (index) => {
-        const updatedItems = items.filter((item, i) => i !== index);
-        setitems(updatedItems);
 
-        const updatedSaleItems = saleitems.filter((_, i) => i !== index);
-        setsaleitems(updatedSaleItems);
-        const newprice = price - items[index].fiyat;
-        setprice(newprice)
+    const saleIptal = () => {
+        setSaleItems([]);
+        setItems([]);
+        setPrice(0);
     };
 
+    const deleteItem = (index) => {
+        setPrice((prevPrice) => prevPrice - items[index].fiyat);
+        setItems((prevItems) => prevItems.filter((_, i) => i !== index));
+        setSaleItems((prevSaleItems) => prevSaleItems.filter((_, i) => i !== index));
+    };
 
     return (
-        <div>
-            <div className="mainsale">
-                <div className="sale">
-                    <div className="saleinput">
-                        <form onSubmit={getitem}>
-                            <input
-                                className="input"
-                                type="text"
-                                value={barkod}
-                                onChange={(e) => setbarkod(e.target.value)}
-                                placeholder="Barkod giriniz"
-                            />
-                            <button className="button" type="submit">
-                                Gönder
-                            </button>
-                        </form>
-                    </div>
+        <div className="mainsale">
+            <div className="sale">
+                <div className="saleinput">
+                    <form onSubmit={getItem}>
+                        <input
+                            className="input"
+                            type="text"
+                            value={barkod}
+                            onChange={(e) => setBarkod(e.target.value)}
+                            placeholder="Barkod giriniz"
+                        />
+                        <button className="button" type="submit">Gönder</button>
+                    </form>
+                </div>
+            </div>
+
+            <div className="listitems">
+                <div className="buut">
+                    <button className="button" onClick={saleItem}>Satış</button>
+                    <button className="button" onClick={saleIptal}>İptal</button>
                 </div>
 
-                <div className="listitems">
+                <ul className="ul">
+                    {items.map((item, index) => (
+                        <div className="listitem" key={index}>
+                            <li>{`Ürün: ${item.isim}, Fiyat: ${item.fiyat} TL`}</li>
+                            <button onClick={() => deleteItem(index)} className="buttonitem">Çıkar</button>
+                        </div>
+                    ))}
+                </ul>
+            </div>
 
-                    <div className="buut ">
-                        <button className="button" onClick={saleitem}>Satış</button>
-                        <button className="button" onClick={saleiptal}>iptal</button></div>
-                    <ul className="ul">
-                        {items.map((item, index) =>
-                            item && item.isim ? (
-                                <div className="listitem">
-                                    <li key={index}>{`Ürün: ${item.isim}, Fiyat: ${item.fiyat}`}</li>
-                                    <button key={index} onClick={() => deleteitem(index)} className="buttonitem">çıkar</button>
-                                </div>
-                            ) : (
-                                <li key={index}>Ürün bilgisi bulunamadı</li>
-                            )
-                        )}
-                    </ul>
-
-                </div>
-                <div className="sales">
-                    <label className="label">{`Toplam :${price} TL`}</label>
-
-                </div>
+            <div className="sales">
+                <label className="label">{`Toplam: ${price} TL`}</label>
             </div>
         </div>
     );
