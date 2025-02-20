@@ -14,7 +14,8 @@ const routeKayit=require("./routes/kayit/kayit");
 const routeList=require("./routes/list/list");
 const routeSale=require("./routes/sale/sale");
 const routeUpdate=require("./routes/update/update");
-const kayıts=require("./routes/gunlukkayıt/kayıts");
+const routerkayıts=require("./routes/gunlukkayıt/kayıts");
+const routeraylikkayit=require("./routes/aylıkkayıt/aylık");
  
 app.get("/serverapp",(req,res)=>{
     res.status(200).json("ad")
@@ -27,7 +28,8 @@ app.use("/serverapp",routeKayit);
 app.use("/serverapp",routeList);
 app.use("/serverapp",routeSale);
 app.use("/serverapp",routeUpdate);
-app.use("/serverapp",kayıts);
+app.use("/serverapp",routerkayıts);
+app.use("/serverapp",routeraylikkayit)
 
 
 app.listen(process.env.SERVER_PORT,()=>{

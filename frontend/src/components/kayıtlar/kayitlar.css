@@ -1,0 +1,13 @@
+.ay{
+    background-color:rgb(235, 235, 225);
+    width: 25%;
+    height: auto;
+    display: flex;
+    flex-direction: row
+
+}
+.gun{
+    width: auto;
+    height: auto;
+    border: 2px black solid;
+}

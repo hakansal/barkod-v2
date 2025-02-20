@@ -1,70 +1,59 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./kayitlar.css"
 
 const Kayitlar = () => {
+  const [data, setData] = useState([]);
+  const [aylık,setAylık]=useState(0);
 
-    const [gun, setguns] = useState("");
-    const [satislar, setsatislar] = useState([]);
-    const [toplamfiyat, setToplamfiyat] = useState(0);
-    useEffect(() => {
-        const getItem = async () => {
-            try {
-                const today = new Date();
-                const todayStr = today.toDateString();
-                const data = {
-                    gun: todayStr
-                }
-                const respone = await axios({
-                    method: "post",
-                    data: data,
-                    url: "http://localhost:3001/serverapp/gunlukkayit",
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-                });
-                if (respone) {
-                    setguns(respone.data.gun);
-                    setsatislar(respone.data.satislar);
-                }
-            } catch (error) {
-                alert("data yüklenemedi")
-            }
+  useEffect(() => {
+    const getItem = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/serverapp/aylik", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
 
-
+        if (Array.isArray(response.data)) {
+          setData(response.data);
+        } else {
+          setData([]);
         }
-        getItem();
-    }, []);
-    useEffect(() => {
-        const toplam = satislar.reduce((acc, item) => acc + item.fiyat, 0);
-        setToplamfiyat(toplam);
-    }, [satislar]);
+      } catch (error) {
+        console.error("Veri çekme hatası:", error);
+        setData([]);
+      }
+    };
 
+    getItem();
+  }, []);
+  useEffect(() => {
+    const toplam = data.reduce((acc, item) => {
+      return acc + item.satislar.reduce((sum, satis) => sum + satis.fiyat, 0);
+    }, 0);
 
-    return <div className="divmain">
+    setAylık(toplam);
+  }, [data]);
+  return (
+    <div className="ay">
+      {data.length === 0 ? (
+        <p>Veri bulunamadı!</p>
+      ) : (
+        data.map((item) => {
+          const gunlukToplam = item.satislar.reduce((acc, satis) => acc + satis.fiyat, 0);
 
-
-        <div className="listsatis">
-
-            <h2>Günlük Satış Kayıtları</h2>
-            {satislar?.length > 0 ? (
-                satislar.map((item) => (
-
-                    <div key={item._id} className="satislar">
-                        <p>{`${item.isim}`}</p>
-                        <p>{`${item.barkod}`}</p>
-                        <div className="fiyat">{`${item.fiyat} tl`}</div>
-
-                    </div>
-                ))
-            ) : (
-                <p>Bugün için satış kaydı bulunmamaktadır.</p>
-            )}
-        </div>
-        <div className="satistoplam">
-            <p  >{`toplam fiyat:${toplamfiyat}`}</p>
-        </div>
+          return (
+            <div key={item._id} className="gun">
+              <h3>Tarih: {new Date(item.gun).toLocaleDateString("tr-TR")}</h3>
+              <p>{`Günlük toplam fiyat: ${gunlukToplam}₺`}</p>
+               
+               
+            </div>
+          );
+        })
+      )} <div> <h2>Aylık Toplam Fiyat: {aylık}₺</h2> {/* Aylık toplam gösteriliyor */}</div>
     </div>
-
-}
-
-
+    
+  );
+};
 
 export default Kayitlar;
