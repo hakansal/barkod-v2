@@ -1,0 +1,18 @@
+.listsatis{
+    display: flex;
+    margin-left: 25%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    height:auto;
+    background-color: aqua;
+
+}
+.satislar{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: 50px;
+    background-color: brown;
+}
