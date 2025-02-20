@@ -7,7 +7,7 @@
     height: 110px;
     background-color: rgb(223, 223, 218);
     box-shadow: 5px 5px 5px gray;
-    justify-content: space-between;
+    gap: 650px;
 }
 .buttonlogo{
     display: flex;

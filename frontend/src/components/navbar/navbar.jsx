@@ -22,7 +22,10 @@ const Navbar = () => {
             </div>
             <div className="buttonr">
                 <div>
-                    <Link className="link"  to="/satis">< a className="a">satış</ a></Link>
+                    <Link className="link" to="/kayitlar">< a className="a">kayıtlar</ a></Link>
+                </div>
+                <div>
+                    <Link className="link" to="/satis">< a className="a">satış</ a></Link>
                 </div>
                 <div>
                     <Link className="link" to="/liste">< a className="a">listele</ a></Link>
@@ -37,14 +40,15 @@ const Navbar = () => {
                     <Link className="link" to="/silme">< a className="a">sil</ a></Link>
                 </div>
                 <div>
-                    <Link className="link"  to="/guncelle">< a className="a">güncelle</ a></Link>
+                    <Link className="link" to="/guncelle">< a className="a">güncelle</ a></Link>
                 </div>
-                
+
                 <div>
 
-                   <Link  className="link" to="/">< a className="a ck"onClick={logout}>çıkış</ a></Link>
+                    <Link className="link" to="/">< a className="a ck" onClick={logout}>çıkış</ a></Link>
 
                 </div>
+
             </div>
 
         </div>

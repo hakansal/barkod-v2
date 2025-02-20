@@ -6,6 +6,7 @@ const Mainscreen= ()=>{
     
    const [gun,setguns]=useState("");
    const [satislar,setsatislar]=useState([]);
+   const [toplamfiyat,setToplamfiyat]=useState(0);
 
 useEffect(()=>{
     const getItem= async()=>{
@@ -34,23 +35,33 @@ useEffect(()=>{
        getItem();
 },[]);
 
-
+useEffect(() => {
+  const toplam = satislar.reduce((acc, item) => acc + item.fiyat, 0);
+  setToplamfiyat(toplam);
+}, [satislar]);
 return (
-    <div>
+    <div className="divmain">
        
 
       <div className="listsatis">
         
       <h2>Günlük Satış Kayıtları</h2>
-        {satislar?.length > 0 ? ( // Güvenli kontrol
+        {satislar?.length > 0 ? ( 
           satislar.map((item) => (
+            
             <div key={item._id} className="satislar">
-              {`${item.barkod} - ${item.isim} - ${item.fiyat} TL`}
+              <p>{`${item.isim}`}</p>
+              <p>{`${item.barkod}`}</p>
+              <div className="fiyat">{`${item.fiyat} tl`}</div>
+             
             </div>
           ))
         ) : (
           <p>Bugün için satış kaydı bulunmamaktadır.</p>
         )}
+      </div>
+      <div className="satistoplam">
+        <p  >{`toplam fiyat:${toplamfiyat}`}</p>
       </div>
     </div>
   );

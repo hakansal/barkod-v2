@@ -9,6 +9,7 @@ import Sale from './components/sale/sale';
 import Crud from './components/crud/crud';
 import Sil from './components/sil/sil';
 import Update from './components/update/update';
+import Kayitlar from "./components/kayıtlar/kayitlar"
 function App() {
   const location = useLocation();   
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/urunekleme" element={<Crud/>}/>
         <Route path="/silme" element={<Sil/>}/>
         <Route path="/guncelle" element={<Update/>}/>
+        <Route path='/kayitlar' element={<Kayitlar/>}/>
 
 
       </Routes>
