@@ -22,7 +22,7 @@ const Update = () => {
             const response = await axios({
                 method: "post",
                 data: data,
-                url: "http://localhost:3001/serverapp/guncelle",
+                url: "https://barkod-v2.onrender.com/serverapp/guncelle",
                 headers: { Authorization:  `Bearer ${localStorage.getItem("token")}`  }
             })
               console.log(response);

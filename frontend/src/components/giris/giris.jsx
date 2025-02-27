@@ -15,7 +15,7 @@ const Giris = () => {
         
         try {
             e.preventDefault();
-            const response = await axios({ method: "post", url: "http://localhost:3001/serverapp/giris", data: data })
+            const response = await axios({ method: "post", url: "https://barkod-v2.onrender.com/serverapp/giris", data: data })
 
             if (response) {
                 const token =response.data.token;

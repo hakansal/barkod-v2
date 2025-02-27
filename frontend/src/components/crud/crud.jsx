@@ -24,7 +24,7 @@ const senddata=async(e)=>{
       const response =await axios({
           method:"post",
           data:data,
-          url:"http://localhost:3001/serverapp/kayit",
+          url:"https://barkod-v2.onrender.com/serverapp/kayit",
           headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}
       });
       if(response){

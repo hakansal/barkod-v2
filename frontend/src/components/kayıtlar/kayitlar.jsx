@@ -9,7 +9,7 @@ const Kayitlar = () => {
   useEffect(() => {
     const getItem = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/serverapp/aylik", {
+        const response = await axios.get("https://barkod-v2.onrender.com/serverapp/aylik", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
 

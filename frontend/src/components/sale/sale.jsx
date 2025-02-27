@@ -12,7 +12,7 @@ const Sale = () => {
         e.preventDefault();
         try {
             const response = await axios.post(
-                "http://localhost:3001/serverapp/bul",
+                "https://barkod-v2.onrender.com/serverapp/bul",
                 { barkod },
                 { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );

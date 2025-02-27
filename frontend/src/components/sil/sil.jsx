@@ -17,7 +17,7 @@ const Sil = () => {
                 method: "post",
                 data: data,
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                url: "http://localhost:3001/serverapp/bul"
+                url: "https://barkod-v2.onrender.com/serverapp/bul"
             });
             if (response) {
                 setresponse(response.data.item);

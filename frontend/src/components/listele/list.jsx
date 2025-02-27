@@ -17,7 +17,7 @@ const List = () => {
 
         const response = await axios({
             method: "get",
-            url: "http://localhost:3001/serverapp/listele",
+            url: "https://barkod-v2.onrender.com/serverapp/listele",
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 
         });

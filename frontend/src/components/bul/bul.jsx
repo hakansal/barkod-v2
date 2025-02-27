@@ -18,7 +18,7 @@ const Bul = () => {
             const response = await axios({
                 method: "post",
                 data: data,
-                url: "http://localhost:3001/serverapp/bul",
+                url: "https://barkod-v2.onrender.com/serverapp/bul",
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
             if (!response) {
