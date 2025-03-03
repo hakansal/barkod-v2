@@ -1,13 +1,51 @@
-.ay{
+.gunluk{
     background-color:rgb(235, 235, 225);
-    width: 25%;
+    width: 800px;
     height: auto;
     display: flex;
-    flex-direction: row
+    flex-direction: row;
+    border: 2px black solid;
+
 
 }
+.li{
+   font-size: xx-large;
+}
 .gun{
-    width: auto;
-    height: auto;
+    width: 200px;
+    height: 170px;
     border: 2px black solid;
+}
+.mainkayit{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+    margin-left:  50px;
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+}
+.ayliktablo{
+    display: flex;
+    flex-direction: row;
+    width: 800px;
+    height: auto;
+    background-color: rgb(235, 235, 225);
+    border: 2px black solid;
+
+}
+.ay{
+    width: auto;
+    height: 100px;
+    font-size: large;
+    font-weight: bold;
+    border: 2px black solid;
+    background-color:  rgb(216, 216, 212);
+}
+.ayliktoplam{
+    display: flex;
+    flex-direction: column;
+    width: 550px;
+    height: auto;
+    background-color:  rgb(235, 235, 225);
 }

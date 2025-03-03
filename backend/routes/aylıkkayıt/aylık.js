@@ -1,9 +1,9 @@
 const express=require("express");
 const Satismodel=require("../../Db/models/gunlukkayit");
 const router=express.Router();
+const tokencheck=require("../tokencheck");
 
-
-router.get("/aylik",async(req,res)=>{
+router.get("/aylik",tokencheck,async(req,res)=>{
 
  try {
     

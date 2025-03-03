@@ -19,7 +19,7 @@ const senddata=async(e)=>{
 
   try {
     if(!barkod||!isim||!adet||!fiyat){
-        alert("verileri ekle")
+        
     }
       const response =await axios({
           method:"post",
@@ -31,7 +31,7 @@ const senddata=async(e)=>{
           alert("kayıt başarılı");
       }
   } catch (error) {
-    alert(error)
+    alert("hata")
      
   }
 
@@ -41,7 +41,7 @@ const senddata=async(e)=>{
 
         <div className="maincrud">
             <div className="crudinput">
-                <form onSubmit={senddata} className="form">
+                <form   className="form">
                     <div className="divdorm">
                         <label className="label">Barkod</label>
                         <input onChange={(e)=>{setbarkod(e.target.value)}} placeholder="barkod" className="input"></input>
@@ -59,7 +59,7 @@ const senddata=async(e)=>{
                         <input onChange={(e)=>{setadet(e.target.value)}}placeholder="adet" className="input"></input>
                     </div>
 
-                    <button type ="submint"className="button">kayıt et </button>
+                    <button onClick={senddata} type ="submint"className="button">kayıt et </button>
 
                 </form>
 

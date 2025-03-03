@@ -24,7 +24,7 @@
     align-items: center;
     justify-content: center;
     gap:20px;
-    background-color: aliceblue;
+    background-color: rgb(235, 235, 225);
     border :solid 1px;
     box-shadow: 3px 3px 3px gray;
 }
@@ -38,7 +38,7 @@
     align-items: center;
     justify-content: center;
     overflow-y: auto;
-    background-color: aliceblue;
+    background-color: rgb(235, 235, 225);
     border: 1px solid black;
     box-shadow: 1px 3px 5px;
     

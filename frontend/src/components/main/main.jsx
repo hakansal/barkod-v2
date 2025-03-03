@@ -24,7 +24,7 @@ useEffect(()=>{
          });
          if(respone){
             setguns(respone.data.gun);
-            setsatislar(respone.data.satislar);
+            setsatislar(respone.data.satislar||[]);
         }
        } catch (error) {
         

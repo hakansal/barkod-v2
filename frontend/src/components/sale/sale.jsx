@@ -90,10 +90,7 @@ const Sale = () => {
             </div>
 
             <div className="listitems">
-                <div className="buut">
-                    <button className="button" onClick={saleItem}>Satış</button>
-                    <button className="button" onClick={saleIptal}>İptal</button>
-                </div>
+                 
 
                 <ul className="ul">
                     {items.map((item, index) => (
@@ -106,6 +103,10 @@ const Sale = () => {
             </div>
 
             <div className="sales">
+            <div className="buut">
+                    <button className="button" onClick={saleItem}>Satış</button>
+                    <button className="button" onClick={saleIptal}>İptal</button>
+                </div>
                 <label className="label">{`Toplam: ${price} TL`}</label>
             </div>
         </div>

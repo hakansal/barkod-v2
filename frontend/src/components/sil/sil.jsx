@@ -36,7 +36,7 @@ const Sil = () => {
                 method: "delete",
                 data: data,
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                url: "http://localhost:3001/serverapp/sil"
+                url: "https://barkod-v2.onrender.com/serverapp/sil"
             })
             if (response) {
                 alert("silindi")

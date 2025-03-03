@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import "./giris.css"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";  
+ 
 const Giris = () => {
     const [username, setUserName] = useState("");
     const [password, SetPassword] = useState("");
+    
     const navigate=useNavigate();
     const data = {
         username: username,
@@ -29,7 +31,7 @@ const Giris = () => {
             }
         } catch (error) {
             alert("başarısız");
-            console.log(error);
+             
         }
     }
  
