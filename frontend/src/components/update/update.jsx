@@ -28,16 +28,18 @@ const Update = () => {
               console.log(response);
             if (response) {
                 alert("güncellendi")
+            }else if(!response){
+                alert("hata güncellenemedi");
             }
         } catch (error) {
-            alert(error)
+             
         }
     }
 
     return <div>
         <div className="mainupdate">
             <div className="inputupdate">
-                <form className="form" onSubmit={sendata}>
+                <form className="form"  >
                     <div className="divinput">
                         <label className="label"> barkod</label>
                         <input onChange={(e) => { setbarkod(e.target.value) }} type="text" placeholder="barkod" className="input"></input>
@@ -58,7 +60,7 @@ const Update = () => {
                         <label className="label"> adet</label>
                         <input onChange={(e) => { setadet(e.target.value) }} type="text" placeholder="adet" className="input"></input>
                     </div>
-                    <button type="submit" className="button"> güncelle</button>
+                    <button onClick={sendata} type="submit" className="button"> güncelle</button>
                 </form>
             </div>
         </div>

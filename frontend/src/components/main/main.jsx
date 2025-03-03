@@ -19,7 +19,7 @@ useEffect(()=>{
          const respone=await axios({
              method:"post",
              data:data,
-             url:"http://localhost:3001/serverapp/gunlukkayit",
+             url:"https://barkod-v2.onrender.com/serverapp/gunlukkayit",
              headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}
          });
          if(respone){
@@ -27,7 +27,7 @@ useEffect(()=>{
             setsatislar(respone.data.satislar);
         }
        } catch (error) {
-        alert("data yüklenemedi")
+        
        }
     
        

@@ -10,21 +10,21 @@ router.post("/guncelle",tokencheck, async (req, res) => {
     try {
         const { barkod, adet, isim, fiyat } = req.body;
         if (!barkod || !adet || !isim || !fiyat) {
-            res.status(400).json("veri eklemediniz");
+           return  res.status(400).json("veri eklemediniz");
         };
         const item = await Items.findOne({ barkod: barkod });
         if (!item) {
-            res.status(400).json("barkodda hata veya böyle bir ürün yok");
+          return  res.status(400).json("barkodda hata veya böyle bir ürün yok");
 
         };
         if (item) {
             await item.updateOne({ adet: adet, isim: isim, fiyat: fiyat });
             item.save();
-            res.status(200).json("güncelleme yapıldu");
+          return  res.status(200).json("güncelleme yapıldu");
 
         };
     } catch (err) {
-        res.status(400).json({ message: "hata", error: err });
+       return res.status(400).json({ message: "hata", error: err });
     }
 });
 

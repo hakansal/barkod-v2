@@ -30,7 +30,9 @@ const Sale = () => {
                 } else {
                     alert("Ürün bulunamadı.");
                 }
+                
             }
+            if(response)setBarkod("");
         } catch (error) {
             console.error("Ürün getirirken hata oluştu:", error);
         }
@@ -43,7 +45,7 @@ const Sale = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:3001/serverapp/satis",
+                "https://barkod-v2.onrender.com/serverapp/satis",
                 { items: saleItems },
                 { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
