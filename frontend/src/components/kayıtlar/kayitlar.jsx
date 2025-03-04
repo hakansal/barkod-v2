@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./kayitlar.css";
 
+ 
 const Kayitlar = () => {
   const [data, setData] = useState([]);
   const [aylik, setAylik] = useState([]);  
@@ -66,6 +67,7 @@ const Kayitlar = () => {
           {aylik.map((ay) => (
             <ul key={ay}>
               <li className="ay">{`${ay}. Ay: ${(aylıktoplam[ay] || 0).toFixed(2)}₺`}</li>
+              
             </ul>
           ))}
         </div>
