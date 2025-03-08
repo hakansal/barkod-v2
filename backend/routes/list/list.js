@@ -20,10 +20,10 @@ router.get("/listele", tokencheck, async (req, res) => {
             adet:adet
         }
 
-        res.status(200).json(data);
+       return res.status(200).json(data);
     } catch (err) {
 
-        res.status(400).json({ message: "hata", error: err });
+      return  res.status(400).json({ message: "hata", error: err });
 
     }
 });

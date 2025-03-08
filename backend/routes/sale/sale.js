@@ -56,7 +56,7 @@ router.post("/satis", tokencheck, async (req, res) => {
 
   } catch (error) {
     console.error("Satış hatası:", error);
-    res.status(500).json({ message: "Sunucu hatası", error: error.message });
+    return res.status(500).json({ message: "Sunucu hatası", error: error.message });
   }
 });
 
