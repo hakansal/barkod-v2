@@ -1,101 +1,110 @@
-/* Aylık kısmı için takvim stil */
-.ayliktablo {
-    margin: 20px 0;
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .ayliktablo h2 {
-    font-size: 24px;
-    color: #333333;
-    margin-bottom: 15px;
-  }
-  
-  /* Aylık toplamlar grid düzeni */
-  .ayliktoplam {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 sütunlu grid yapısı */
-    gap: 10px;
-    justify-items: center;
-  }
-  
-  /* Aylık kutular */
-  .ayliktoplam ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .ayliktoplam .ay {
-    font-size: 18px;
-    font-weight: bold;
-    color: #4CAF50;
-    background-color: #E8F5E9;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-align: center;
-    transition: transform 0.3s ease;
-  }
-  
-  .ayliktoplam .ay:hover {
-    transform: translateY(-5px); /* Hover efekti */
-  }
-  
-  /* Günlük kısmı için kutular */
-  .gunluk {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 sütunlu grid */
-    gap: 10px;
-    justify-items: center;
-  }
-  
-  .gun {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+/* Ana container */
+.calendar-container {
+    margin: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 30px;
+  }
+  
+  /* Ay Takvim Bölümü */
+  .month-calendar {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+  }
+  
+  .month-calendar:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+  
+  /* Başlık (Ay ismi ve toplam satış) */
+  .month-calendar h3 {
+    background: linear-gradient(90deg, #ffa726, #fb8c00);
+    color: #fff;
+    margin: 0;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
     text-align: center;
-    width: 100%;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   }
   
-  .gun:hover {
-    transform: translateY(-5px); /* Hover efekti */
+  /* Takvim Grid */
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 10px;
+    background-color: #f7f7f7;
   }
   
-  .gun h3 {
-    font-size: 16px;
-    color: #333333;
-  }
-  
-  .gun p {
-    font-size: 14px;
-    color: #555555;
+  /* Gün İsimleri */
+  .calendar-header {
     font-weight: bold;
+    text-align: center;
+    background-color: #e0e0e0;
+    border: 1px solid #ddd;
+    padding: 6px;
+    border-radius: 4px;
   }
   
-  .gunluk .gun .gun-hoc {
+  /* Takvim Hücreleri */
+  .calendar-cell {
+    border: 1px solid #ddd;
+    min-height: 80px;
+    padding: 5px;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .calendar-cell:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  /* Bugünün rengi için özel stil */
+  .today {
+    background-color: #ffecb3 !important;
+    border: 2px solid #ffa000;
+  }
+  
+  /* Boş hücreler için */
+  .empty-cell {
+    background-color: transparent;
+    border: none;
+  }
+  
+  /* Hücre içindeki gün numarası ve satış bilgisi */
+  .cell-day {
+    display: block;
     font-weight: bold;
-    font-size: 16px;
-    color: #4CAF50; /* Ayın günleri için yeşil renkte yazı */
-    background-color: #E8F5E9; /* Yeşil kutucuk arka planı */
-    padding: 8px;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #333;
   }
   
-  .gunluk .gun--empty {
-    background-color: #f0f0f0;
-    color: #ccc;
+  .cell-sales {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  /* Responsive Tasarım */
+  @media (max-width: 768px) {
+    .calendar-container {
+      margin: 10px;
+    }
+  
+    .calendar-cell {
+      min-height: 60px;
+      padding: 3px;
+    }
   }
   

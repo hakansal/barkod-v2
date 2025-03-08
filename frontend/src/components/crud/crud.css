@@ -1,40 +1,57 @@
-.maincrud{
-    margin-top: 50px;
-    display:flex;
-    flex-direction: row;
-    height: 100%;
-    width:100vw;
-    gap:20px;
-    align-items: center;
-    justify-content: center;
+.maincrud {
    
-}
-.form{
-    gap:40px;
-}
-.divdorm{
     display: flex;
-    flex-direction: row;
-     gap:20px;
-    justify-content: space-between;
-}
-.divbutton{
-    display: flex;
-    flex-direction: row;
-     
-    justify-content: space-between;
-}
-
-.crudinput{
-    display:flex;
-    flex-direction: column;
-    height: auto;
-    width: 500px;
     justify-content: center;
     align-items: center;
-    background-color: rgb(235, 235, 225);
-    border :solid 1px;
-    box-shadow: 3px 3px 3px gray;
-    
-}
- 
+    width: 100%;
+    min-height: 80vh; /* Ekran yüksekliğinin tamamını kapla */
+    background-color: #f4f4f4;
+  }
+  
+  .crudinput {
+    width: 400px;  
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .divdorm {
+    display: flex;
+    flex-direction: column; /* Dikey hizalama */
+    gap: 8px;
+  }
+  
+  .label {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .button {
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #ffa726, #fb8c00);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100px;
+    height: 35px;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }

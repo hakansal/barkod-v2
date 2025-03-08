@@ -1,74 +1,110 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./crud.css"
+import "./crud.css";
 
 const Crud = () => {
-const [barkod,setbarkod]=useState();
-const [isim,setisim]=useState();
-const [adet,setadet]=useState();
-const [fiyat,setfiyat]=useState()
-const data={
-    barkod:barkod,
-    isim:isim,
-    adet:adet,
-    fiyat:fiyat
-}
+  const [barkod, setBarkod] = useState("");
+  const [isim, setIsim] = useState("");
+  const [adet, setAdet] = useState("");
+  const [fiyat, setFiyat] = useState("");
+  const [loading, setLoading] = useState(false);
 
-const senddata=async(e)=>{
- e.preventDefault();
+  const sendData = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    if(!barkod||!isim||!adet||!fiyat){
-        
+    if (!barkod || !isim || !adet || !fiyat) {
+      alert("Lütfen tüm alanları doldurun!");
+      setLoading(false);
+      return;
     }
-      const response =await axios({
-          method:"post",
-          data:data,
-          url:"https://barkod-v2.onrender.com/serverapp/kayit",
-          headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}
-      });
-      if(response){
-          alert("kayıt başarılı");
+
+    try {
+      const response = await axios.post(
+        "https://barkod-v2.onrender.com/serverapp/kayit",
+        { barkod, isim, adet, fiyat },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Kayıt başarılı!");
+        // Inputları temizle
+        setBarkod("");
+        setIsim("");
+        setAdet("");
+        setFiyat("");
+      } else {
+        alert("Kayıt sırasında bir hata oluştu.");
       }
-  } catch (error) {
-    alert("hata")
-     
-  }
+    } catch (error) {
+      alert(`Hata: ${error.response ? error.response.data.message : error.message}`);
+    }
 
-}
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
 
-    return <div>
+  return (
+    <div className="maincrud">
+      <div className="crudinput">
+        <form className="form" onSubmit={sendData}>
+          <div className="divdorm">
+            <label className="label">Barkod</label>
+            <input
+              value={barkod}
+              onChange={(e) => setBarkod(e.target.value)}
+              placeholder="Barkod"
+              className="input"
+              type="text"
+            />
+          </div>
+          <div className="divdorm">
+            <label className="label">İsim</label>
+            <input
+              value={isim}
+              onChange={(e) => setIsim(e.target.value)}
+              placeholder="İsim giriniz"
+              className="input"
+              type="text"
+            />
+          </div>
+          <div className="divdorm">
+            <label className="label">Fiyat</label>
+            <input
+              value={fiyat}
+              onChange={(e) => setFiyat(e.target.value)}
+              placeholder="Fiyat"
+              className="input"
+              type="number"
+            />
+          </div>
+          <div className="divdorm">
+            <label className="label">Adet</label>
+            <input
+              value={adet}
+              onChange={(e) => setAdet(e.target.value)}
+              placeholder="Adet"
+              className="input"
+              type="number"
+            />
+          </div>
 
-        <div className="maincrud">
-            <div className="crudinput">
-                <form   className="form">
-                    <div className="divdorm">
-                        <label className="label">Barkod</label>
-                        <input onChange={(e)=>{setbarkod(e.target.value)}} placeholder="barkod" className="input"></input>
-                    </div>
-                    <div className="divdorm">
-                        <label className="label">isim</label>
-                        <input onChange={(e)=>{setisim(e.target.value)}} placeholder="isim giriniz" className="input"></input>
-                    </div>
-                    <div className="divdorm">
-                        <label className="label">fiyat</label>
-                        <input onChange={(e)=>{setfiyat(e.target.value)}}placeholder="fiyat" className="input"></input>
-                    </div>
-                    <div className="divdorm">
-                        <label className="label">adet</label>
-                        <input onChange={(e)=>{setadet(e.target.value)}}placeholder="adet" className="input"></input>
-                    </div>
+          <button type="submit" className="button">
+            {loading ? "Kayıt ediliyor..." : "Kayıt et"}
+          </button>
+        </form>
 
-                    <button onClick={senddata} type ="submint"className="button">kayıt et </button>
-
-                </form>
-
-            </div>
-            
-        </div>
-
+        {loading && (
+          <div className="spinner-container">
+            <div className="spinner"></div>
+          </div>
+        )}
+      </div>
     </div>
-}
-
+  );
+};
 
 export default Crud;

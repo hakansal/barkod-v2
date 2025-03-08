@@ -32,7 +32,11 @@ const Update = () => {
                 alert("hata güncellenemedi");
             }
         } catch (error) {
-             
+            if (error.response.status === 400) {
+                alert("Barkod hatalı veya bulunamadı.");
+              } else {
+                alert(`Sunucu hatası: ${error.response.status}`);
+              }
         }
     }
 

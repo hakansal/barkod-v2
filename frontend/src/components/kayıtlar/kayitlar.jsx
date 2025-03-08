@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./kayitlar.css";
 
+const monthNames = [
+  "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+  "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+];
+
 const Kayitlar = () => {
   const [data, setData] = useState([]);
-  const [aylik, setAylik] = useState([]);
-  const [aylıktoplam, setAylıktoplam] = useState({});
-  const [gunlukToplam, setGunlukToplam] = useState([]);
+  
 
   useEffect(() => {
     const getItem = async () => {
@@ -14,7 +17,6 @@ const Kayitlar = () => {
         const response = await axios.get("https://barkod-v2.onrender.com/serverapp/aylik", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
-
         if (Array.isArray(response.data)) {
           setData(response.data);
         } else {
@@ -29,68 +31,95 @@ const Kayitlar = () => {
     getItem();
   }, []);
 
-  useEffect(() => {
-    const aylikToplamHesapla = {};
+  // Verileri yıl-ay bazında gruplandırıyoruz
+  const groupedData = data.reduce((acc, item) => {
+    const date = new Date(item.gun);
+    const month = date.getMonth(); // 0-indexed
+    const year = date.getFullYear();
+    const key = `${year}-${month}`;
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(item);
+    return acc;
+  }, {});
 
-    data.forEach((item) => {
-      const ay = new Date(item.gun).getMonth() + 1;
-      const toplamFiyat = item.satislar.reduce((acc, satis) => acc + satis.fiyat, 0);
+  // Her ay için takvim görünümünü oluşturacak fonksiyon
+  const renderCalendar = (items, key) => {
+    const [year, month] = key.split("-").map(Number);
+    let firstDay = new Date(year, month, 1).getDay();
+    // Haftanın ilk günü olarak Pazartesi'yi kabul etmek için:
+    firstDay = (firstDay + 6) % 7;
+    
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-      if (aylikToplamHesapla[ay]) {
-        aylikToplamHesapla[ay] += toplamFiyat;
-      } else {
-        aylikToplamHesapla[ay] = toplamFiyat;
-      }
+    // Gün bazında satışları hesaplıyoruz
+    const dailySales = {};
+    items.forEach(item => {
+      const date = new Date(item.gun);
+      const day = date.getDate();
+      const toplam = item.satislar.reduce((acc, s) => acc + s.fiyat, 0);
+      dailySales[day] = (dailySales[day] || 0) + toplam;
     });
 
-    setAylıktoplam(aylikToplamHesapla);
-    setAylik(Object.keys(aylikToplamHesapla).map(Number));
+    // Ayın toplam satışını hesaplıyoruz
+    const monthTotal = Object.values(dailySales).reduce((acc, cur) => acc + cur, 0);
 
-    const gunlukToplamlar = data.map((item) =>
-      item.satislar.reduce((acc, satis) => acc + satis.fiyat, 0)
-    );
-    setGunlukToplam(gunlukToplamlar);
-  }, [data]);
+    // Bugünün tarihini alıyoruz
+    const today = new Date();
+    const isCurrentMonth =
+      today.getFullYear() === year && today.getMonth() === month;
+    const todayDate = today.getDate();
 
-  // Günlük takvim kutularını oluşturma
-  const gunSayisi = new Date(data[0]?.gun).getDate(); // İlk kayıttan gün sayısını alıyoruz
-  const gunlukKutular = new Array(31).fill(null); // 31 gün için boş kutu
+    // Takvim hücrelerini oluşturuyoruz: Önce boş hücreler, ardından gerçek günler
+    const cells = [];
+    for (let i = 0; i < firstDay; i++) {
+      cells.push(null);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      cells.push(d);
+    }
 
-  data.forEach((item) => {
-    const gun = new Date(item.gun).getDate();
-    gunlukKutular[gun - 1] = item; // Günün verisini kutuya yerleştir
-  });
-
-  return (
-    <div className="mainkayit">
-      <div className="ayliktablo">
-        <h2>Aylık cirolar: </h2>
-        <div className="ayliktoplam">
-          {aylik.map((ay) => (
-            <ul key={ay}>
-              <li className="ay">{`${ay}. Ay: ${(aylıktoplam[ay] || 0).toFixed(2)}₺`}</li>
-            </ul>
+    return (
+      <div className="month-calendar" key={key}>
+        <h3>
+          {monthNames[month]} {year} - Toplam: {monthTotal.toFixed(2)}₺
+        </h3>
+        <div className="calendar-grid">
+          {/* Haftanın gün isimleri */}
+          {["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"].map((day, index) => (
+            <div className="calendar-header" key={index}>{day}</div>
           ))}
+          {cells.map((cell, idx) => {
+            // Eğer hücre boş ise, boş render ediyoruz.
+            if (!cell) return <div key={idx} className="calendar-cell empty-cell"></div>;
+
+            // Bugünün tarihine eşit olup olmadığını kontrol ediyoruz.
+            const isToday = isCurrentMonth && cell === todayDate;
+
+            return (
+              <div key={idx} className={`calendar-cell ${isToday ? "today" : ""}`}>
+                <span className="cell-day">{cell}</span>
+                <span className="cell-sales">{(dailySales[cell] || 0).toFixed(2)}₺</span>
+              </div>
+            );
+          })}
         </div>
       </div>
+    );
+  };
 
-      <div className="gunluk">
-        {gunlukKutular.map((gun, index) => (
-          <div
-            key={index}
-            className={`gun ${gun ? "" : "gun--empty"}`} // Eğer veri yoksa boş kutu stilini uygula
-          >
-            {gun ? (
-              <>
-                <div className="gun-hoc">{index + 1}</div>
-                <p>{`Günlük toplam: ${gunlukToplam[index]?.toFixed(2)}₺`}</p>
-              </>
-            ) : (
-              <p>Veri yok</p>
-            )}
-          </div>
-        ))}
-      </div>
+  return (
+    <div className="calendar-container">
+      {Object.keys(groupedData).length === 0 ? (
+        <p>Veri bulunamadı!</p>
+      ) : (
+        Object.keys(groupedData)
+          .sort((a, b) => {
+            const [yearA, monthA] = a.split("-").map(Number);
+            const [yearB, monthB] = b.split("-").map(Number);
+            return yearA !== yearB ? yearA - yearB : monthA - monthB;
+          })
+          .map(key => renderCalendar(groupedData[key], key))
+      )}
     </div>
   );
 };

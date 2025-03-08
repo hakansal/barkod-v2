@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const List = () => {
     const navigate = useNavigate();
 
-    // Token kontrolünü doğru şekilde yapıyoruz.
     useEffect(() => {
         if (localStorage.getItem("token") === null) {
             navigate("/giris");
@@ -17,7 +16,6 @@ const List = () => {
     const [price, setPrice] = useState(0);
     const [adet, setAdet] = useState(0);
 
-    // getitems fonksiyonunu useEffect içinde çağırıyoruz.
     useEffect(() => {
         const getItems = async () => {
             try {
@@ -39,6 +37,17 @@ const List = () => {
 
         getItems();
     }, []);
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`https://barkod-v2.onrender.com/serverapp/sil/${id}`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+            });
+            setItems(items.filter(item => item._id !== id));
+        } catch (error) {
+            console.error("Error deleting item:", error);
+        }
+    };
 
     return (
         <div className="mainlist">
@@ -64,7 +73,7 @@ const List = () => {
                                 <p className="item-adet">{item.adet} Adet</p>
                                 <p className="item-price">{item.fiyat} TL</p>
                             </div>
-                            
+                             
                         </div>
                     ))}
                 </ul>

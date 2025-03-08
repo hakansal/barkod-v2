@@ -24,7 +24,7 @@
 }
 
 .summary-item {
-    background-color: #3498db;
+    background: linear-gradient(90deg, #fb8c00, #ffa726);
     padding: 10px 15px;
     border-radius: 5px;
     color: white;
@@ -33,16 +33,23 @@
 
 .displaylist {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
 }
 
 .list {
     list-style: none;
     padding: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;  
+    gap: 20px;
+   
+    
 }
 
 .listitem {
@@ -54,10 +61,15 @@
     margin-bottom: 10px;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 2px black solid;
+    width: 200px;
 }
 
 .item-info {
-    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
 }
 
 .item-barkod {
