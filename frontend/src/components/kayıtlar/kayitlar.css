@@ -1,51 +1,101 @@
-.gunluk{
-    background-color:rgb(235, 235, 225);
-    width: 800px;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    border: 2px black solid;
-
-
-}
-.li{
-   font-size: xx-large;
-}
-.gun{
-    width: 200px;
-    height: 170px;
-    border: 2px black solid;
-}
-.mainkayit{
-    display: flex;
-    flex-direction: row;
-    gap:20px;
-    margin-left:  50px;
-    margin-top: 20px;
-    width: 100%;
-    height: 100%;
-}
-.ayliktablo{
-    display: flex;
-    flex-direction: row;
-    width: 800px;
-    height: auto;
-    background-color: rgb(235, 235, 225);
-    border: 2px black solid;
-
-}
-.ay{
-    width: auto;
-    height: 100px;
-    font-size: large;
+/* Aylık kısmı için takvim stil */
+.ayliktablo {
+    margin: 20px 0;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .ayliktablo h2 {
+    font-size: 24px;
+    color: #333333;
+    margin-bottom: 15px;
+  }
+  
+  /* Aylık toplamlar grid düzeni */
+  .ayliktoplam {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 sütunlu grid yapısı */
+    gap: 10px;
+    justify-items: center;
+  }
+  
+  /* Aylık kutular */
+  .ayliktoplam ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .ayliktoplam .ay {
+    font-size: 18px;
     font-weight: bold;
-    border: 2px black solid;
-    background-color:  rgb(216, 216, 212);
-}
-.ayliktoplam{
+    color: #4CAF50;
+    background-color: #E8F5E9;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .ayliktoplam .ay:hover {
+    transform: translateY(-5px); /* Hover efekti */
+  }
+  
+  /* Günlük kısmı için kutular */
+  .gunluk {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 sütunlu grid */
+    gap: 10px;
+    justify-items: center;
+  }
+  
+  .gun {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
-    width: 550px;
-    height: auto;
-    background-color:  rgb(235, 235, 225);
-}
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .gun:hover {
+    transform: translateY(-5px); /* Hover efekti */
+  }
+  
+  .gun h3 {
+    font-size: 16px;
+    color: #333333;
+  }
+  
+  .gun p {
+    font-size: 14px;
+    color: #555555;
+    font-weight: bold;
+  }
+  
+  .gunluk .gun .gun-hoc {
+    font-weight: bold;
+    font-size: 16px;
+    color: #4CAF50; /* Ayın günleri için yeşil renkte yazı */
+    background-color: #E8F5E9; /* Yeşil kutucuk arka planı */
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .gunluk .gun--empty {
+    background-color: #f0f0f0;
+    color: #ccc;
+  }
+  

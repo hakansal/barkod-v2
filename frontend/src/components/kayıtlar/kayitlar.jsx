@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./kayitlar.css";
 
- 
 const Kayitlar = () => {
   const [data, setData] = useState([]);
-  const [aylik, setAylik] = useState([]);  
-  const [aylıktoplam, setAylıktoplam] = useState({});  
-  const [gunlukToplam, setGunlukToplam] = useState([]);  
+  const [aylik, setAylik] = useState([]);
+  const [aylıktoplam, setAylıktoplam] = useState({});
+  const [gunlukToplam, setGunlukToplam] = useState([]);
 
   useEffect(() => {
     const getItem = async () => {
@@ -31,14 +30,12 @@ const Kayitlar = () => {
   }, []);
 
   useEffect(() => {
-     
     const aylikToplamHesapla = {};
 
     data.forEach((item) => {
-      const ay = new Date(item.gun).getMonth() + 1;  
-      const toplamFiyat = item.satislar.reduce((acc, satis) => acc + satis.fiyat, 0);  
+      const ay = new Date(item.gun).getMonth() + 1;
+      const toplamFiyat = item.satislar.reduce((acc, satis) => acc + satis.fiyat, 0);
 
-       
       if (aylikToplamHesapla[ay]) {
         aylikToplamHesapla[ay] += toplamFiyat;
       } else {
@@ -46,18 +43,23 @@ const Kayitlar = () => {
       }
     });
 
-  
     setAylıktoplam(aylikToplamHesapla);
-
-    
     setAylik(Object.keys(aylikToplamHesapla).map(Number));
 
- 
     const gunlukToplamlar = data.map((item) =>
       item.satislar.reduce((acc, satis) => acc + satis.fiyat, 0)
     );
     setGunlukToplam(gunlukToplamlar);
   }, [data]);
+
+  // Günlük takvim kutularını oluşturma
+  const gunSayisi = new Date(data[0]?.gun).getDate(); // İlk kayıttan gün sayısını alıyoruz
+  const gunlukKutular = new Array(31).fill(null); // 31 gün için boş kutu
+
+  data.forEach((item) => {
+    const gun = new Date(item.gun).getDate();
+    gunlukKutular[gun - 1] = item; // Günün verisini kutuya yerleştir
+  });
 
   return (
     <div className="mainkayit">
@@ -67,23 +69,27 @@ const Kayitlar = () => {
           {aylik.map((ay) => (
             <ul key={ay}>
               <li className="ay">{`${ay}. Ay: ${(aylıktoplam[ay] || 0).toFixed(2)}₺`}</li>
-              
             </ul>
           ))}
         </div>
       </div>
 
       <div className="gunluk">
-        {data.length === 0 ? (
-          <p>Veri bulunamadı!</p>
-        ) : (
-          data.map((item, index) => (
-            <div key={item._id} className="gun">
-              <h3>Tarih: {new Date(item.gun).toLocaleDateString("tr-TR")}</h3>
-              <p>{`Günlük toplam fiyat: ${gunlukToplam[index]?.toFixed(2)}₺`}</p>
-            </div>
-          ))
-        )}
+        {gunlukKutular.map((gun, index) => (
+          <div
+            key={index}
+            className={`gun ${gun ? "" : "gun--empty"}`} // Eğer veri yoksa boş kutu stilini uygula
+          >
+            {gun ? (
+              <>
+                <div className="gun-hoc">{index + 1}</div>
+                <p>{`Günlük toplam: ${gunlukToplam[index]?.toFixed(2)}₺`}</p>
+              </>
+            ) : (
+              <p>Veri yok</p>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -1,68 +1,82 @@
 import React, { useState } from "react";
-import "./giris.css"
+import "./giris.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";  
- 
+import { useNavigate } from "react-router-dom";
+
 const Giris = () => {
     const [username, setUserName] = useState("");
-    const [password, SetPassword] = useState("");
-    
-    const navigate=useNavigate();
-    const data = {
-        username: username,
-        password: password
-    }
-   
+    const [password, setPassword] = useState("");
+    const [showdiv, setShowdiv] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
+    const data = { username, password };
+
     const summit = async (e) => {
-        
+        e.preventDefault();
+        setLoading(true);
         try {
-            e.preventDefault();
-            const response = await axios({ method: "post", url: "https://barkod-v2.onrender.com/serverapp/giris", data: data })
+            const response = await axios.post("https://barkod-v2.onrender.com/serverapp/giris", data);
 
-            if (response) {
-                const token =response.data.token;
-                localStorage.setItem("token",  token );
-               alert("başarılı");
-               navigate("/mainscreen"); 
-
-            }
-            else{
-                alert(" wdwd");
+            if (response && response.data.token) {
+                localStorage.setItem("token", response.data.token);
+                setShowdiv(true);
+                setTimeout(() => {
+                    setLoading(false);
+                    navigate("/mainscreen");
+                }, 1000);
+            } else {
+                alert("Kullanıcı adı veya şifre yanlış.");
+                setLoading(false);
             }
         } catch (error) {
-            alert("başarısız");
-             
+            alert("Giriş başarısız.");
+            setLoading(false);
         }
-    }
- 
+    };
 
-    return <div>
-
+    return (
         <div className="girisbox">
             <h1>Giriş</h1>
             <div className="inputbox">
-                <form className="form" onSubmit={summit} >
+                <form className="form" onSubmit={summit}>
                     <div className="formdiv">
-                        <label className="label">kullanıcı adı</label>
-                        <input onChange={(e) => { setUserName(e.target.value); }} className="input" type="text"></input>
+                        <label className="label">Kullanıcı Adı</label>
+                        <input
+                            onChange={(e) => setUserName(e.target.value)}
+                            className="input"
+                            type="text"
+                            required
+                        />
                     </div>
                     <div className="formdiv">
-                        <label className="label">şifre</label>
-
-                        <input onChange={(e) => { SetPassword(e.target.value); }} className="input" type="text"></input>
+                        <label className="label">Şifre</label>
+                        <input
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="input"
+                            type="password"
+                            required
+                        />
                     </div>
                     <div className="buttondiv">
-                        <button   className="button">Giriş</button>
+                        <button type="submit" className="button" disabled={loading}>
+                            {loading ? "Yükleniyor..." : "Giriş"}
+                        </button>
                     </div>
+                    {loading && (
+                        <div className="spinner-container">
+                            <div className="spinner"></div>
+                        </div>
+                    )}
+                    {showdiv && (
+                        <div className="hiddenDiv">
+                            Giriş başarılı!
+                        </div>
+                    )}
                 </form>
             </div>
-
         </div>
-        <div>
-        
-        </div>
-
-    </div>
-}
+    );
+};
 
 export default Giris;

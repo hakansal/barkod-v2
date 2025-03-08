@@ -23,7 +23,7 @@ const Bul = () => {
             });
             if (!response) {
                 return alert("hata");
-
+                
             }
             if (response) {
 
@@ -36,6 +36,7 @@ const Bul = () => {
         } catch (error) {
           return  alert(error);
         }
+        
     };
     return <div>
         <div className="bulmain">

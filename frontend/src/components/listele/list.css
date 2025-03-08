@@ -1,41 +1,92 @@
-.mainlist{
-    margin-top: 50px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: auto;
-    gap:20px;
+.mainlist {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.displaylist{
+.list-header {
     display: flex;
-    flex-direction: column;
-    width: 800px;
-    height: auto; 
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    gap:20px;
-    background-color: rgb(235, 235, 225);
-    overflow-y:scroll;
-    border: 1px solid black;
-    box-shadow: 1px 3px 5px;
+    margin-bottom: 20px;
 }
-.listinfo{  display: flex;
-    flex-direction: column;
-    width: 500px;
-    height: auto; 
-    align-items: center;
-    justify-content: center;
-    gap:20px;
-    background-color: rgb(235, 235, 225);
-    border: 1px solid black;
-    box-shadow: 1px 3px 5px;}
-.list{
+
+.list-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.summary {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-   
-    width: 500px;
+    gap: 20px;
+}
+
+.summary-item {
+    background-color: #3498db;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+}
+
+.displaylist {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+}
+
+.listitem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.item-info {
+    flex-grow: 1;
+}
+
+.item-barkod {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.item-name {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.item-adet,
+.item-price {
+    font-size: 14px;
+    color: #27ae60;
+}
+
+.remove-button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.remove-button:hover {
+    background-color: #c0392b;
 }

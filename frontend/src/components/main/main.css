@@ -1,42 +1,100 @@
-.listsatis{
-    display: flex;
-    margin-left: 25%;
-    margin-top:20px;
+/* Ana Liste Konteyneri */
+ 
+.listsatis {
+    display: flex;  
+    margin-top: 20px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     width: 50%;
-    height:auto;
-    background-color:rgb(230, 221, 211);
-    gap: 5px;
-
-}
-.divmain{
-    display: flex;
-    flex-direction: row;
-    gap:20px
-}
-.satislar{
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 500px;
-    height: 50px;
-    border: 1px solid;
-    background-color:rgb(235, 235, 225);
-    
-}
-.fiyat{
-    background-color: rgb(199, 231, 191);
     height: auto;
-    width: auto;
+    background-color: rgb(230, 221, 211);
+    gap: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.satistoplam{
-    margin-top:20px;
-    width: 200px;
-    height: 200px;
-    background-color:rgb(230, 221, 211);
-     gap: 10px;
+
+/* Satışlar Bölümü */
+.divmain {
+    margin-left: 100px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: start;
+    width: 100%;
 }
- 
+
+/* Her Satışın Görünümü */
+.satislar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    height: 50px;
+    border: 1px solid #B9B7BD;
+    background-color: rgb(235, 235, 225);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Fiyatın Görünümü */
+.fiyat {
+    background-color: rgb(199, 231, 191);
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+/* Toplam Satışlar Alanı */
+.satistoplam {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+    background-color: rgb(230, 221, 211);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+    text-align: center;
+}
+
+/* Satış ve Fiyat Etkileşimi için Hover Efekti */
+.satislar:hover {
+    background-color: rgb(220, 220, 210);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Toplam Fiyat ve Adet Sayısını Gösterme */
+.satistoplam h1 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.satistoplam p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Ekran Boyutuna Göre Duyarlı Tasarım */
+@media (max-width: 768px) {
+    .listsatis {
+        margin-left: 10%;
+        width: 80%;
+    }
+
+    .satislar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .satistoplam {
+        width: 80%;
+    }
+}
