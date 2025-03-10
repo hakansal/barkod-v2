@@ -24,7 +24,7 @@ const Bul = () => {
         
           setLoading(false);
      
-      } else if (response.status == 400) {
+      } else if (response.status === 400) {
         alert("barkod da hata var");
       }
       else {

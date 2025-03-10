@@ -79,13 +79,13 @@
 }
 
 .item-name {
-    font-size: 14px;
+    font-size: 25px;
     color: #7f8c8d;
 }
 
 .item-adet,
 .item-price {
-    font-size: 14px;
+    font-size: 20px;
     color: #27ae60;
 }
 
@@ -96,7 +96,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 20px;
 }
 
 .remove-button:hover {

@@ -8,6 +8,7 @@
     padding: 30px;
     flex-wrap: wrap;
     background-color: #f4f4f4;
+    height: 50vw;
   }
   
   /* Sale Section (Ürün Ekleme) */
@@ -94,8 +95,8 @@
   .list-section {
     display: flex;
     flex-direction: column;
-    width: 600px;
-    max-height: 600px;
+    width: 800px;
+    max-height: 800px;
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -122,6 +123,12 @@
     background-color: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     transition: transform 0.2s ease;
+    gap:20px
+  }
+  .img{
+    width: 150px;
+    height: 150px;
+    background-color: transparent;
   }
   
   .sale-list-item:hover {
@@ -132,7 +139,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    font-size: 1rem;
+    font-size: 5rem;
     font-weight: 500;
     color: #333;
   }
@@ -145,6 +152,7 @@
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
+    font-size: 20px;
   }
   
   .delete-button:hover {

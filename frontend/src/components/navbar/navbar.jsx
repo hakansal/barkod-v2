@@ -17,35 +17,35 @@ const Navbar = () => {
         <div className="nav">
             <div className="buttonlogo">
                 <div className="navbutton" >
-                    <Link className="link" to="mainscreen">< a className=" al">Bahçekent AVM</ a></Link>
+                    <Link className="link" to="mainscreen">< p className=" al">Bahçekent AVM</ p></Link>
                 </div>
             </div>
             <div className="buttonr">
                 <div>
-                    <Link className="link" to="/kayitlar">< a className="a">kayıtlar</ a></Link>
+                    <Link className="link" to="/kayitlar">< p className="a">kayıtlar</ p></Link>
                 </div>
                 <div>
-                    <Link className="link" to="/satis">< a className="a">satış</ a></Link>
+                    <Link className="link" to="/satis">< p className="a">satış</ p></Link>
                 </div>
                 <div>
-                    <Link className="link" to="/liste">< a className="a">listele</ a></Link>
+                    <Link className="link" to="/liste">< p className="a">listele</ p></Link>
                 </div>
                 <div>
-                    <Link className="link" to="/bul">< a className="a">bul</ a></Link>
+                    <Link className="link" to="/bul">< p className="a">bul</ p></Link>
                 </div>
                 <div>
-                    <Link className="link" to="/urunekleme">< a className="a">kayıt</ a></Link>
+                    <Link className="link" to="/urunekleme">< p className="a">kayıt</ p></Link>
                 </div>
                 <div>
-                    <Link className="link" to="/silme">< a className="a">sil</ a></Link>
+                    <Link className="link" to="/silme">< p className="a">sil</ p></Link>
                 </div>
                 <div>
-                    <Link className="link" to="/guncelle">< a className="a">güncelle</ a></Link>
+                    <Link className="link" to="/guncelle">< p className="a">güncelle</ p></Link>
                 </div>
 
                 <div>
 
-                    <Link className="link" to="/">< a className="a ck" onClick={logout}>çıkış</ a></Link>
+                    <Link className="link" to="/">< p className="a ck" onClick={logout}>çıkış</ p></Link>
 
                 </div>
 

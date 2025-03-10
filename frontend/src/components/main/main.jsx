@@ -3,7 +3,7 @@ import "./main.css";
 import axios from "axios";
 
 const Mainscreen = () => {
-  const [gun, setguns] = useState("");
+  
   const [satislar, setsatislar] = useState([]);
   const [toplamfiyat, setToplamfiyat] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const Mainscreen = () => {
         });
 
         if (response) {
-          setguns(response.data.gun);
+          
           setsatislar(response.data.satislar || []);
         }
       } catch (error) {
