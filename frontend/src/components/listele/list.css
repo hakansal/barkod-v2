@@ -1,104 +1,144 @@
+/* Genel kapsayıcı */
 .mainlist {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Üst kısımda başlık, arama çubuğu ve özet */
 .list-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
+/* Başlık */
 .list-header h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
 }
 
+/* Arama çubuğu */
+.search-bar {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+.search-bar:focus {
+    border-color: #ffa726;
+}
+
+/* Özet alanı */
 .summary {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .summary-item {
     background: linear-gradient(90deg, #fb8c00, #ffa726);
-    padding: 10px 15px;
-    border-radius: 5px;
-    color: white;
-    font-size: 18px;
-}
-
-.displaylist {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    padding: 20px;
+    padding: 12px 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
 }
 
+/* Listeyi saran alan */
+.displaylist {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Liste */
 .list {
     list-style: none;
     padding: 0;
-    width: 100%;
+    margin: 0;
     display: flex;
-    flex-wrap: wrap;  
+    flex-wrap: wrap;
     gap: 20px;
-   
-    
 }
 
+/* Her bir liste öğesi */
 .listitem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ecf0f1;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border: 2px black solid;
-    width: 200px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    width: calc(25% - 20px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.listitem:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* İçerik düzeni */
 .item-info {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
+    flex-direction: column;
     gap: 10px;
+    align-items: center;
+    text-align: center;
 }
 
+/* Barkod bilgisi */
 .item-barkod {
     font-size: 16px;
-    font-weight: bold;
-    color: #2c3e50;
+    font-weight: 600;
+    color: #444;
 }
 
+/* Ürün adı */
 .item-name {
-    font-size: 25px;
-    color: #7f8c8d;
+    font-size: 20px;
+    color: #666;
+    font-weight: 500;
 }
 
+/* Adet ve fiyat */
 .item-adet,
 .item-price {
-    font-size: 20px;
+    font-size: 18px;
     color: #27ae60;
+    font-weight: 500;
 }
 
+/* Ürün resmi */
+.img {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* Kaldırma butonu (varsa) */
 .remove-button {
     background-color: #e74c3c;
-    color: white;
+    color: #fff;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
-
 .remove-button:hover {
     background-color: #c0392b;
 }
