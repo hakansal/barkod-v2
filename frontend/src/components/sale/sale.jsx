@@ -12,43 +12,57 @@ const Sale = () => {
   const [price, setPrice] = useState(0);
   const [loading, setLoading] = useState(false);
   const [donesale, setDonesale] = useState(null);
-  // Her ürünün görsel URL'sini saklamak için bir nesne kullanıyoruz:
+  // Her ürünün görsel URL'sini saklamak için:
   const [imgUrls, setImgUrls] = useState({});
 
   const getItem = async (e) => {
     e.preventDefault();
+    if (!barkod.trim()) {
+      return alert("Lütfen geçerli bir barkod giriniz!");
+    }
     setLoading(true);
     try {
+      // Önce ürün bilgilerini getiriyoruz:
       const response = await axios.post(
         "https://barkod-v2.onrender.com/serverapp/bul",
         { barkod },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
 
-      // Görseli almak için Google Custom Search API'sine istek gönderiyoruz:
-      const imgResponse = await axios.get(
-        `https://www.googleapis.com/customsearch/v1?q=${barkod}&cx=${cx}&key=${apiKey}&searchType=image`
-      );
-
-      let imageUrl = null;
-      if (imgResponse.data.items && imgResponse.data.items.length > 0) {
-        imageUrl = imgResponse.data.items[0].link;
-      }
-      // Barkod bilgisi unique kabul edildiği için, görsel URL'sini barkoda göre saklıyoruz:
-      setImgUrls((prev) => ({ ...prev, [barkod]: imageUrl }));
-
       if (response?.data?.item) {
         const item = response.data.item;
         setSaleItems((prev) => [...prev, item.barkod]);
         setItems((prev) => [...prev, item]);
         setPrice((prev) => prev + item.fiyat);
+
+        // Ürün bilgileri yüklendikten sonra fotoğraf isteğini başlatıyoruz.
+        axios
+          .get(
+            `https://www.googleapis.com/customsearch/v1?q=${barkod}&cx=${cx}&key=${apiKey}&searchType=image`
+          )
+          .then((imgResponse) => {
+            let imageUrl = null;
+            if (imgResponse.data.items && imgResponse.data.items.length > 0) {
+              imageUrl = imgResponse.data.items[0].link;
+            }
+            // Görsel URL'sini güncelliyoruz:
+            setImgUrls((prev) => ({ ...prev, [barkod]: imageUrl }));
+          })
+          .catch((error) => {
+            // Fotoğraf isteğinde hata alsak da diğer işlemler etkilenmeyecek:
+            console.error("Fotoğraf yüklenemedi:", error);
+          });
       } else {
         alert("Ürün bulunamadı.");
       }
       setBarkod("");
     } catch (error) {
+      if (error.response && error.response.status === 429) {
+        alert("Çok fazla istek gönderildi. Lütfen biraz bekleyin ve tekrar deneyin.");
+      } else {
+        alert("Ürün getirirken hata oluştu.");
+      }
       console.error("Ürün getirirken hata oluştu:", error);
-      alert("Ürün getirirken hata oluştu.");
     } finally {
       setLoading(false);
     }
@@ -86,19 +100,13 @@ const Sale = () => {
   };
 
   const deleteItem = (index) => {
-     
     const deletedBarkod = items[index].barkod;
-  
-  
     const newItems = items.filter((_, i) => i !== index);
     const newSaleItems = saleItems.filter((_, i) => i !== index);
-  
-     
     setPrice((prev) => prev - items[index].fiyat);
     setItems(newItems);
     setSaleItems(newSaleItems);
-  
-  
+
     if (!newItems.some((item) => item.barkod === deletedBarkod)) {
       setImgUrls((prev) => {
         const newImgUrls = { ...prev };
@@ -107,9 +115,7 @@ const Sale = () => {
       });
     }
   };
-  
 
-   
   useEffect(() => {
     if (donesale) {
       const timer = setTimeout(() => {
