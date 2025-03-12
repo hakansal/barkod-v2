@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./sale.css";
 import axios from "axios";
 
-const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-const cx = process.env.REACT_APP_GOOGLE_CX;
-
+ 
 const Sale = () => {
   const [barkod, setBarkod] = useState("");
   const [items, setItems] = useState([]);
@@ -12,8 +10,7 @@ const Sale = () => {
   const [price, setPrice] = useState(0);
   const [loading, setLoading] = useState(false);
   const [donesale, setDonesale] = useState(null);
-  // Her ürünün görsel URL'sini saklamak için:
-  const [imgUrls, setImgUrls] = useState({});
+ 
 
   const getItem = async (e) => {
     e.preventDefault();
@@ -35,23 +32,7 @@ const Sale = () => {
         setItems((prev) => [...prev, item]);
         setPrice((prev) => prev + item.fiyat);
 
-        // Ürün bilgileri yüklendikten sonra fotoğraf isteğini başlatıyoruz.
-        axios
-          .get(
-            `https://www.googleapis.com/customsearch/v1?q=${barkod}&cx=${cx}&key=${apiKey}&searchType=image`
-          )
-          .then((imgResponse) => {
-            let imageUrl = null;
-            if (imgResponse.data.items && imgResponse.data.items.length > 0) {
-              imageUrl = imgResponse.data.items[0].link;
-            }
-            // Görsel URL'sini güncelliyoruz:
-            setImgUrls((prev) => ({ ...prev, [barkod]: imageUrl }));
-          })
-          .catch((error) => {
-            // Fotoğraf isteğinde hata alsak da diğer işlemler etkilenmeyecek:
-            console.error("Fotoğraf yüklenemedi:", error);
-          });
+      
       } else {
         alert("Ürün bulunamadı.");
       }
@@ -96,24 +77,17 @@ const Sale = () => {
     setSaleItems([]);
     setItems([]);
     setPrice(0);
-    setImgUrls({});
+   
   };
 
   const deleteItem = (index) => {
-    const deletedBarkod = items[index].barkod;
+   
     const newItems = items.filter((_, i) => i !== index);
     const newSaleItems = saleItems.filter((_, i) => i !== index);
     setPrice((prev) => prev - items[index].fiyat);
     setItems(newItems);
     setSaleItems(newSaleItems);
-
-    if (!newItems.some((item) => item.barkod === deletedBarkod)) {
-      setImgUrls((prev) => {
-        const newImgUrls = { ...prev };
-        delete newImgUrls[deletedBarkod];
-        return newImgUrls;
-      });
-    }
+ 
   };
 
   useEffect(() => {
@@ -153,11 +127,7 @@ const Sale = () => {
         <ul className="sale-list">
           {items.map((item, index) => (
             <li key={index} className="sale-list-item">
-              <img
-                className="img"
-                alt=""
-                src={imgUrls[item.barkod] || "/default-image.png"}
-              />
+             
               <div className="item-info">
                 <span className="item-name">{`Ürün: ${item.isim}`}</span>
                 <span className="item-price">{`Fiyat: ${item.fiyat} TL`}</span>

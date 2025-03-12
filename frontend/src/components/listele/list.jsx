@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./list.css";
 import { useNavigate } from "react-router-dom";
- 
+
 
 const List = () => {
   const navigate = useNavigate();
@@ -39,20 +39,23 @@ const List = () => {
 
           const barkodSet = new Set(productItems.map((item) => item.barkod));
           setBarkods(barkodSet.size);
- 
+          setTimeout(()=>{
+            setLoading(false)
+          },500);
+
         }
       } catch (error) {
         console.error("Error fetching items:", error);
       } finally {
         // Ürün bilgileri geldikten sonra, görseller ayrı yüklense bile loading kapatılsın.
-        setLoading(false);
+      
       }
     };
 
     getItems();
   }, [navigate]);
 
- 
+
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
@@ -87,21 +90,24 @@ const List = () => {
         </div>
       </div>
 
-      <div className="displaylist">
-        <ul className="list">
-          {filteredItems.map((item) => (
-            <div className="listitem" key={item._id}>
-              <div className="item-info">
-                <p className="item-barkod">{item.barkod}</p>
-                  
-                <p className="item-name">{item.isim}</p>
-                <p className="item-adet">{item.adet} Adet</p>
-                <p className="item-price">{item.fiyat} TL</p>
-              </div>
-            </div>
-          ))}
-        </ul>
-      </div>
+      {loading ? (
+  <div className="spinner"></div>
+) : (
+  <div className="displaylist">
+    <ul className="list">
+      {filteredItems.map((item) => (
+        <div className="listitem" key={item._id}>
+          <div className="item-infol">
+            <p className="item-barkod">{item.barkod}</p>
+            <p className="item-name">{item.isim}</p>
+            <p className="item-adet">{item.adet} Adet</p>
+            <p className="item-price">{item.fiyat} TL</p>
+          </div>
+        </div>
+      ))}
+    </ul>
+  </div>
+)}
     </div>
   );
 };

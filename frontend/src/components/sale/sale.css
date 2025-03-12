@@ -138,9 +138,9 @@
   
   .item-info {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    font-size: 5rem;
+    flex-direction: row;
+    gap: 40px;
+    font-size: 4rem;
     font-weight: 500;
     color: #333;
   }

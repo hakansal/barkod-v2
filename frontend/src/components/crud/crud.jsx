@@ -50,7 +50,7 @@ const Crud = () => {
   return (
     <div className="maincrud">
       <div className="crudinput">
-        <form className="form" onSubmit={sendData}>
+        <form className="form" >
           <div className="divdorm">
             <label className="label">Barkod</label>
             <input
@@ -92,7 +92,7 @@ const Crud = () => {
             />
           </div>
 
-          <button type="submit" className="button">
+          <button  onClick={sendData} className="button">
             {loading ? "Kayıt ediliyor..." : "Kayıt et"}
           </button>
         </form>
