@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./list.css";
 import { useNavigate } from "react-router-dom";
-
-const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-const cx = process.env.REACT_APP_GOOGLE_CX;
+ 
 
 const List = () => {
   const navigate = useNavigate();
@@ -14,7 +12,6 @@ const List = () => {
   const [price, setPrice] = useState(0);
   const [adet, setAdet] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [imgUrls, setImgUrls] = useState({});
   const [barkods, setBarkods] = useState(0);
 
   useEffect(() => {
@@ -42,9 +39,7 @@ const List = () => {
 
           const barkodSet = new Set(productItems.map((item) => item.barkod));
           setBarkods(barkodSet.size);
-
-          // Ürünler ekranda gösterildikten sonra görselleri asenkron olarak yükle:
-          fetchImageUrls(productItems);
+ 
         }
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -57,25 +52,7 @@ const List = () => {
     getItems();
   }, [navigate]);
 
-  const fetchImageUrls = async (items) => {
-    const imgUrlsMap = {};
-
-    await Promise.all(
-      items.map(async (item) => {
-        try {
-          const imgResponse = await axios.get(
-            `https://www.googleapis.com/customsearch/v1?q=${item.barkod}&cx=${cx}&key=${apiKey}&searchType=image`
-          );
-          imgUrlsMap[item._id] = imgResponse?.data?.items?.[0]?.link || null;
-        } catch (error) {
-          console.error("Error fetching image for product:", item._id, error);
-          imgUrlsMap[item._id] = null;
-        }
-      })
-    );
-
-    setImgUrls(imgUrlsMap);
-  };
+ 
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
@@ -116,17 +93,7 @@ const List = () => {
             <div className="listitem" key={item._id}>
               <div className="item-info">
                 <p className="item-barkod">{item.barkod}</p>
-                <div className="img-container">
-                  {loading && !imgUrls[item._id] ? (
-                    <div className="spinner"></div>
-                  ) : (
-                    <img
-                      className="img"
-                      src={imgUrls[item._id] || "/default-image.png"}
-                      alt=""
-                    />
-                  )}
-                </div>
+                  
                 <p className="item-name">{item.isim}</p>
                 <p className="item-adet">{item.adet} Adet</p>
                 <p className="item-price">{item.fiyat} TL</p>
