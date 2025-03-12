@@ -4,7 +4,7 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
+    max-width: 1650px;
     margin: 0 auto;
 }
 
@@ -70,6 +70,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+     
 }
 
 /* Her bir liste öğesi */
@@ -79,8 +80,9 @@
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid #ddd;
-    width: calc(25% - 20px);
+    width: 200px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
 }
 .listitem:hover {
     transform: translateY(-3px);
