@@ -31,6 +31,13 @@ function App() {
 
       </Routes>
     </div>)
+function AppWrapper() {
+   return (
+     <Router>
+       <App />
+     </Router>
+   );
+ }
   
 
 export default AppWrapper;
