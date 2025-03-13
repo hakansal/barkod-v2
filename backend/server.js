@@ -31,7 +31,7 @@ app.use("/serverapp",routeUpdate);
 app.use("/serverapp",routerkayıts);
 app.use("/serverapp",routeraylikkayit)
 
-
-app.listen(process.env.SERVER_PORT,()=>{
+const PORT = process.env.PORT || 3001;
+app.listen(PORT,()=>{
     console.log("sever is ready");
 })
