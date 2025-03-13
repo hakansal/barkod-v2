@@ -67,7 +67,7 @@ const Crud = () => {
                 className="input"
                 type="text"
               />
-              {/* Kamera butonu */}
+               
               <button
                 type="button"
                 onClick={() => setScanning(true)}
