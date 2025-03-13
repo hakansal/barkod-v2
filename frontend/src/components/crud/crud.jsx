@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import "./crud.css";
 
 const Crud = () => {
@@ -8,6 +9,7 @@ const Crud = () => {
   const [adet, setAdet] = useState("");
   const [fiyat, setFiyat] = useState("");
   const [loading, setLoading] = useState(false);
+  const [scanning, setScanning] = useState(false);
 
   const sendData = async (e) => {
     e.preventDefault();
@@ -39,7 +41,11 @@ const Crud = () => {
         alert("Kayıt sırasında bir hata oluştu.");
       }
     } catch (error) {
-      alert(`Hata: ${error.response ? error.response.data.message : error.message}`);
+      alert(
+        `Hata: ${
+          error.response ? error.response.data.message : error.message
+        }`
+      );
     }
 
     setTimeout(() => {
@@ -50,16 +56,27 @@ const Crud = () => {
   return (
     <div className="maincrud">
       <div className="crudinput">
-        <form className="form" >
+        <form className="form">
           <div className="divdorm">
             <label className="label">Barkod</label>
-            <input
-              value={barkod}
-              onChange={(e) => setBarkod(e.target.value)}
-              placeholder="Barkod"
-              className="input"
-              type="text"
-            />
+            <div className="barkod-input-wrapper">
+              <input
+                value={barkod}
+                onChange={(e) => setBarkod(e.target.value)}
+                placeholder="Barkod"
+                className="input"
+                type="text"
+              />
+              {/* Kamera butonu */}
+              <button
+                type="button"
+                onClick={() => setScanning(true)}
+                className="camera-button"
+                title="Barkod okut"
+              >
+                📷
+              </button>
+            </div>
           </div>
           <div className="divdorm">
             <label className="label">İsim</label>
@@ -92,7 +109,7 @@ const Crud = () => {
             />
           </div>
 
-          <button  onClick={sendData} className="button">
+          <button onClick={sendData} className="button">
             {loading ? "Kayıt ediliyor..." : "Kayıt et"}
           </button>
         </form>
@@ -103,6 +120,31 @@ const Crud = () => {
           </div>
         )}
       </div>
+
+      {/* Barkod okuyucu modal */}
+      {scanning && (
+        <div className="scanner-modal">
+          <div className="scanner-content">
+            <button
+              type="button"
+              className="close-button"
+              onClick={() => setScanning(false)}
+            >
+              Kapat
+            </button>
+            <BarcodeScannerComponent
+              width={300}
+              height={300}
+              onUpdate={(err, result) => {
+                if (result) {
+                  setBarkod(result.text);
+                  setScanning(false);
+                }
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

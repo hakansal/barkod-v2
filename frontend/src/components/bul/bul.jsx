@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import "./bul.css";
 
 const Bul = () => {
-  const [serverresponse, setServerResponse] = useState({});
+  const [serverResponse, setServerResponse] = useState({});
   const [barkod, setBarkod] = useState("");
   const [loading, setLoading] = useState(false);
+  const inputRef = useRef(null);
+
   const getResponse = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     if (!barkod) {
+      setLoading(false);
       return alert("Lütfen barkod ekleyiniz");
     }
 
@@ -19,25 +23,22 @@ const Bul = () => {
         { barkod },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
+
       if (response && response.data.item) {
         setServerResponse(response.data.item);
-        
-          setLoading(false);
-     
-      } else if (response.status === 400) {
-        alert("barkod da hata var");
-      }
-      else {
+      } else {
         alert("Hata: Geçerli veri alınamadı");
       }
     } catch (error) {
-      setLoading(false);
-      if (error.response.status === 400) {
+      if (error.response?.status === 400) {
         alert("Barkod hatalı veya bulunamadı.");
       } else {
-        alert(`Sunucu hatası: ${error.response.status}`);
+        alert(`Sunucu hatası: ${error.response?.status || "Bilinmiyor"}`);
       }
-
+    } finally {
+      setLoading(false);
+      setBarkod("");
+      inputRef.current?.focus();
     }
   };
 
@@ -47,7 +48,9 @@ const Bul = () => {
         <form className="bul-form" onSubmit={getResponse}>
           <label className="bul-label">Barkod</label>
           <input
+            ref={inputRef}
             onChange={(e) => setBarkod(e.target.value)}
+            value={barkod}
             className="bul-input-field"
             type="text"
             placeholder="Barkod giriniz..."
@@ -60,16 +63,15 @@ const Bul = () => {
               <div className="spinner"></div>
             </div>
           )}
-
         </form>
       </div>
       <div className="bul-response">
-        {serverresponse.isim ? (
+        {serverResponse.isim ? (
           <div className="response-content">
-            {`${serverresponse.isim} - ${serverresponse.adet} adet - ${serverresponse.fiyat}₺`}
+            {`${serverResponse.isim} - ${serverResponse.adet} adet - ${serverResponse.fiyat}₺`}
           </div>
         ) : (
-          <p className="response-placeholder">ürünler.</p>
+          <p className="response-placeholder">Ürünler burada görüntülenecek.</p>
         )}
       </div>
     </div>

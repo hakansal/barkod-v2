@@ -39,6 +39,7 @@
     width: 100%; /* İçeriğin genişliğini doldur */
     justify-content: center;
     align-items: center;
+    
   }
   
   .form label {
@@ -65,4 +66,30 @@
   
   .form button:hover {
     background-color: #0056b3;
+  }
+  @media (max-width: 500px) {
+    .mainupdate {
+  
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 80vh; 
+      background-color: #f4f4f4; 
+      gap: 20px;
+    }
+    .inputupdate {
+       
+      width: 100%; /* Daha uygun genişlik */
+      padding: 30px;
+      background-color: #fff; /* Daha modern arka plan rengi */
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Daha hafif gölge */
+    }
+    .bul{
+      background-color: #fff;
+      width: 200px; /* Daha uygun genişlik */
+      padding: 30px;
+    }
   }

@@ -105,8 +105,8 @@ const Update = () => {
         {item && (
           <div className="bul">
             <p>İsim: {item?.isim || "Bilinmiyor"}</p>
-            <p>İsim: {item?.adet || "Bilinmiyor"}</p>
-            <p>İsim: {item?.fiyat || "Bilinmiyor"}</p>
+            <p>adet: {item?.adet || "Bilinmiyor"}</p>
+            <p>fiyat: {item?.fiyat || "Bilinmiyor"}</p>
 
             <button onClick={sendData} className="button">
               Güncelle

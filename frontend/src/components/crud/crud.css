@@ -50,8 +50,48 @@
     transition: background-color 0.3s ease;
     width: 100px;
     height: 35px;
+  }.barkod-input-wrapper {
+    display: flex;
+    align-items: center;
   }
+  
+  .camera-button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  
+  .scanner-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .scanner-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .close-button {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
   
   .button:hover {
     background-color: #0056b3;
   }
+@media (max-width: 500px) {
+   
+}
