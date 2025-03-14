@@ -29,7 +29,8 @@ const Crud = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-
+ 
+      
       if (response.status === 200) {
         alert("Kayıt başarılı!");
         // Inputları temizle
