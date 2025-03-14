@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { Html5QrcodeScanner } from "html5-qrcode";
 import "./bul.css";
 
 const Bul = () => {
@@ -7,6 +8,29 @@ const Bul = () => {
   const [barkod, setBarkod] = useState("");
   const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
+  const [scanning, setScanning] = useState(false);
+
+  useEffect(() => {
+    if (scanning) {
+      const scanner = new Html5QrcodeScanner(
+        "barcode-scanner",
+        { fps: 10, qrbox: 250 }
+      );
+
+      scanner.render(
+        (decodedText) => {
+          setBarkod(decodedText);
+          scanner.clear();
+          setScanning(false);
+        },
+        (error) => {
+          console.error("Barkod okunamadı:", error);
+        }
+      );
+
+      return () => scanner.clear();
+    }
+  }, [scanning]);
 
   const getResponse = async (e) => {
     e.preventDefault();
@@ -47,14 +71,26 @@ const Bul = () => {
       <div className="bul-input">
         <form className="bul-form" onSubmit={getResponse}>
           <label className="bul-label">Barkod</label>
-          <input
-            ref={inputRef}
-            onChange={(e) => setBarkod(e.target.value)}
-            value={barkod}
-            className="bul-input-field"
-            type="text"
-            placeholder="Barkod giriniz..."
-          />
+          <div className="barkod-input-wrapper">
+            <input
+              ref={inputRef}
+              onChange={(e) => setBarkod(e.target.value)}
+              value={barkod}
+              className="bul-input-field"
+              type="text"
+              placeholder="Barkod giriniz..."
+            />
+            <button
+              type="button"
+              onClick={() => setScanning(true)}
+              className="camera-button"
+              title="Barkod okut"
+            >
+              📷
+            </button>
+          </div>
+          {scanning && <div id="barcode-scanner"></div>}
+
           <button className="bul-button" type="submit">
             Bul
           </button>
@@ -65,6 +101,7 @@ const Bul = () => {
           )}
         </form>
       </div>
+
       <div className="bul-response">
         {serverResponse.isim ? (
           <div className="response-content">
