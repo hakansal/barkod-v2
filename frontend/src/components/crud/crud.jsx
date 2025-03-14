@@ -1,6 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Html5QrcodeScanner } from "html5-qrcode";
 import "./crud.css";
+
+const QRScanner = ({ onScanSuccess, onClose }) => {
+  useEffect(() => {
+    // QR Scanner ayarları: fps ve qrbox boyutunu ayarlayabilirsiniz.
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+    const scanner = new Html5QrcodeScanner("qr-reader", config, false);
+    scanner.render(
+      (decodedText, decodedResult) => {
+        onScanSuccess(decodedText);
+        scanner.clear(); // Tarayıcıyı temizle
+      },
+      (errorMessage) => {
+        console.warn("QR tarama hatası:", errorMessage);
+      }
+    );
+
+    // Component unmount olunca scanner temizle
+    return () => {
+      scanner.clear().catch((error) => {
+        console.error("QR scanner temizlenirken hata:", error);
+      });
+    };
+  }, [onScanSuccess]);
+
+  return (
+    <div className="scanner-overlay">
+      <div className="scanner-container">
+        <div id="qr-reader" style={{ width: "100%" }}></div>
+        <button className="close-scanner" onClick={onClose}>
+          Kapat
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const Crud = () => {
   const [barkod, setBarkod] = useState("");
@@ -28,7 +65,6 @@ const Crud = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
- 
 
       if (response.status === 200) {
         alert("Kayıt başarılı!");
@@ -53,6 +89,12 @@ const Crud = () => {
     }, 1000);
   };
 
+  // QR tarayıcıdan gelen veriyi barkod inputuna aktar
+  const handleScanSuccess = (data) => {
+    setBarkod(data);
+    setScanning(false);
+  };
+
   return (
     <div className="maincrud">
       <div className="crudinput">
@@ -67,7 +109,6 @@ const Crud = () => {
                 className="input"
                 type="text"
               />
-               
               <button
                 type="button"
                 onClick={() => setScanning(true)}
@@ -120,7 +161,14 @@ const Crud = () => {
           </div>
         )}
       </div>
- 
+
+      {/* Eğer scanning aktifse, QRScanner bileşenini göster */}
+      {scanning && (
+        <QRScanner
+          onScanSuccess={handleScanSuccess}
+          onClose={() => setScanning(false)}
+        />
+      )}
     </div>
   );
 };
