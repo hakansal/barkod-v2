@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import "./crud.css";
 
 const Crud = () => {
@@ -30,7 +29,7 @@ const Crud = () => {
         }
       );
  
-      
+
       if (response.status === 200) {
         alert("Kayıt başarılı!");
         // Inputları temizle
@@ -121,31 +120,7 @@ const Crud = () => {
           </div>
         )}
       </div>
-
-      {/* Barkod okuyucu modal */}
-      {scanning && (
-        <div className="scanner-modal">
-          <div className="scanner-content">
-            <button
-              type="button"
-              className="close-button"
-              onClick={() => setScanning(false)}
-            >
-              Kapat
-            </button>
-            <BarcodeScannerComponent
-              width={300}
-              height={300}
-              onUpdate={(err, result) => {
-                if (result) {
-                  setBarkod(result.text);
-                  setScanning(false);
-                }
-              }}
-            />
-          </div>
-        </div>
-      )}
+ 
     </div>
   );
 };
