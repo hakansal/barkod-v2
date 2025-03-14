@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import BarcodeScanner from "../Scanner/BarcodeScanner "; 
+import { Html5QrcodeScanner } from "html5-qrcode";
 import "./crud.css";
 
 const Crud = () => {
@@ -10,6 +10,28 @@ const Crud = () => {
   const [fiyat, setFiyat] = useState("");
   const [loading, setLoading] = useState(false);
   const [scanning, setScanning] = useState(false);
+
+  useEffect(() => {
+    if (scanning) {
+      const scanner = new Html5QrcodeScanner(
+        "barcode-scanner",
+        { fps: 10, qrbox: 250 }
+      );
+
+      scanner.render(
+        (decodedText) => {
+          setBarkod(decodedText);
+          scanner.clear();
+          setScanning(false);
+        },
+        (error) => {
+          console.error("Barkod okunamadı:", error);
+        }
+      );
+
+      return () => scanner.clear();
+    }
+  }, [scanning]);
 
   const sendData = async (e) => {
     e.preventDefault();
@@ -46,15 +68,10 @@ const Crud = () => {
         }`
       );
     }
+
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  };
-
-  // Tarayıcıdan gelen veriyi barkod inputuna aktar
-  const handleDetected = (code) => {
-    setBarkod(code);
-    setScanning(false);
   };
 
   return (
@@ -80,7 +97,9 @@ const Crud = () => {
                 📷
               </button>
             </div>
+            {scanning && <div id="barcode-scanner"></div>}
           </div>
+
           <div className="divdorm">
             <label className="label">İsim</label>
             <input
@@ -123,14 +142,6 @@ const Crud = () => {
           </div>
         )}
       </div>
-
-      {/* Barkod okutma overlay'ını göster */}
-      {scanning && (
-        <BarcodeScanner
-          onDetected={handleDetected}
-          onClose={() => setScanning(false)}
-        />
-      )}
     </div>
   );
 };
