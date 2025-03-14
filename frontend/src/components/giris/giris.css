@@ -113,7 +113,8 @@
 .formdiv {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
+    justify-content:start;
     gap: 80px
 }
 
@@ -138,4 +139,23 @@
     width: 100px;
     font-family: "Times New Roman", Times, serif;
     font-size: large;
+}
+@media(max-width:500px){
+
+    .inputbox {
+        background-color: rgb(235, 235, 225);
+        width: 400px;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        border: solid 0.01px black;
+        align-items: center;
+        justify-content: center;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    }
+    .input {
+        height: 30px;
+        width: 150px;
+    }
+
 }

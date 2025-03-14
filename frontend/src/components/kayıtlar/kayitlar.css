@@ -31,6 +31,7 @@
     font-weight: bold;
     text-align: center;
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    
   }
   
   /* Takvim Grid */
@@ -97,14 +98,17 @@
   }
   
   /* Responsive Tasarım */
-  @media (max-width: 768px) {
-    .calendar-container {
-      margin: 10px;
-    }
-  
-    .calendar-cell {
-      min-height: 60px;
-      padding: 3px;
+  @media (max-width: 500px) {
+    .month-calendar h3 {
+      background: linear-gradient(90deg, #ffa726, #fb8c00);
+      color: #fff;
+      margin: 0;
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+      overflow-x:scroll;
     }
   }
   

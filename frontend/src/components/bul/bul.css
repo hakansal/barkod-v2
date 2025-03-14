@@ -117,4 +117,33 @@
       padding: 20px;
       
     }
+    .bul-input {
+      width: 300px;
+      height: 500px;
+      background-color: #fff;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      transition: transform 0.3s ease;
+      border:2px black solid;
+    }
+    .bul-response {
+      width: 300px;
+      min-height: 150px;
+      background-color: #fff;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      border:2px black solid;
+    }
   }

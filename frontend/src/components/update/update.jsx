@@ -49,6 +49,8 @@ const Update = () => {
       }
     } catch (error) {
       alert(error.response?.data || "Sunucu hatası.");
+    }finally{
+      setBarkod(null);
     }
   };
 
@@ -104,9 +106,9 @@ const Update = () => {
         </div>
         {item && (
           <div className="bul">
-            <p>İsim: {item?.isim || "Bilinmiyor"}</p>
-            <p>adet: {item?.adet || "Bilinmiyor"}</p>
-            <p>fiyat: {item?.fiyat || "Bilinmiyor"}</p>
+            <p className="label">İsim: {item?.isim || "Bilinmiyor"}</p>
+            <p className="label">adet: {item?.adet || "Bilinmiyor"}</p>
+            <p className="label">fiyat: {item?.fiyat || "Bilinmiyor"}</p>
 
             <button onClick={sendData} className="button">
               Güncelle
