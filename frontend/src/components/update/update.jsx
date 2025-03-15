@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./update.css";
 import axios from "axios";
+import { Html5QrcodeScanner } from "html5-qrcode";
 
 const Update = () => {
   const [barkod, setBarkod] = useState("");
@@ -8,6 +9,29 @@ const Update = () => {
   const [fiyat, setFiyat] = useState("");
   const [adet, setAdet] = useState("");
   const [item, setItem] = useState(null);
+  const [scanning, setScanning] = useState(false);
+
+  useEffect(() => {
+    if (scanning) {
+      const scanner = new Html5QrcodeScanner(
+        "barcode-scanner",
+        { fps: 10, qrbox: 250 }
+      );
+
+      scanner.render(
+        (decodedText) => {
+          setBarkod(decodedText);
+          scanner.clear();
+          setScanning(false);
+        },
+        (error) => {
+          console.error("Barkod okunamadı:", error);
+        }
+      );
+
+      return () => scanner.clear();
+    }
+  }, [scanning]);
 
   const findData = async (e) => {
     e.preventDefault();
@@ -22,6 +46,9 @@ const Update = () => {
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
       setItem(response.data.item);
+      setIsim(response.data.item.isim || "");
+      setAdet(response.data.item.adet || "");
+      setFiyat(response.data.item.fiyat || "");
     } catch (error) {
       alert("Ürün bulunamadı.");
     }
@@ -49,8 +76,8 @@ const Update = () => {
       }
     } catch (error) {
       alert(error.response?.data || "Sunucu hatası.");
-    }finally{
-      setBarkod(null);
+    } finally {
+      setBarkod("");
     }
   };
 
@@ -67,11 +94,20 @@ const Update = () => {
                 placeholder="Barkod"
                 className="input"
               />
+              <button
+                type="button"
+                onClick={() => setScanning(true)}
+                className="camera-button"
+                title="Barkod okut"
+              >
+                📷
+              </button>
             </div>
 
             <div className="divinput">
               <label className="label">İsim</label>
               <input
+                value={isim}
                 onChange={(e) => setIsim(e.target.value)}
                 type="text"
                 placeholder="İsim"
@@ -82,6 +118,7 @@ const Update = () => {
             <div className="divinput">
               <label className="label">Fiyat</label>
               <input
+                value={fiyat}
                 onChange={(e) => setFiyat(e.target.value)}
                 type="text"
                 placeholder="Fiyat"
@@ -92,6 +129,7 @@ const Update = () => {
             <div className="divinput">
               <label className="label">Adet</label>
               <input
+                value={adet}
                 onChange={(e) => setAdet(e.target.value)}
                 type="text"
                 placeholder="Adet"
@@ -107,14 +145,15 @@ const Update = () => {
         {item && (
           <div className="bul">
             <p className="label">İsim: {item?.isim || "Bilinmiyor"}</p>
-            <p className="label">adet: {item?.adet || "Bilinmiyor"}</p>
-            <p className="label">fiyat: {item?.fiyat || "Bilinmiyor"}</p>
+            <p className="label">Adet: {item?.adet || "Bilinmiyor"}</p>
+            <p className="label">Fiyat: {item?.fiyat || "Bilinmiyor"}</p>
 
             <button onClick={sendData} className="button">
               Güncelle
             </button>
           </div>
         )}
+        {scanning && <div id="barcode-scanner"></div>}
       </div>
     </div>
   );
