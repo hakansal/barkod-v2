@@ -9,32 +9,36 @@ const Bul = () => {
   const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
   const [scanning, setScanning] = useState(false);
+  const [scannerError, setScannerError] = useState(""); // Add error state
 
   useEffect(() => {
     if (scanning) {
       const scanner = new Html5QrcodeScanner(
-        "barcode-scanner",
+        "barcode-scanner", // ID of the div where the scanner is shown
         { fps: 10, qrbox: 250 }
       );
 
+      // Start scanning
       scanner.render(
         (decodedText) => {
-          setBarkod(decodedText);
-          scanner.clear();
-          setScanning(false);
+          setBarkod(decodedText); // Set the scanned barcode to the state
+          scanner.clear(); // Clear the scanner
+          setScanning(false); // Stop scanning
         },
         (error) => {
+          setScannerError("Barkod okunamadı. Lütfen tekrar deneyin.");
           console.error("Barkod okunamadı:", error);
         }
       );
 
-      return () => scanner.clear();
+      return () => scanner.clear(); // Clean up when the component unmounts
     }
-  }, [scanning]);
+  }, [scanning]); // Effect runs when scanning state changes
 
   const getResponse = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setScannerError(""); // Reset scanner error message
 
     if (!barkod) {
       setLoading(false);
@@ -90,6 +94,7 @@ const Bul = () => {
             </button>
           </div>
           {scanning && <div id="barcode-scanner"></div>}
+          {scannerError && <div className="scanner-error">{scannerError}</div>} {/* Display scanner error */}
 
           <button className="bul-button" type="submit">
             Bul
