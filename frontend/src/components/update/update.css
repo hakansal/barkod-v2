@@ -22,6 +22,43 @@
     width: 500px; /* Daha uygun genişlik */
     padding: 30px;
   }
+  .button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #45a049;
+  }
+  
+  .camera-button {
+    font-size: 24px;
+    background: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .camera-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .cancel-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .cancel-button:hover {
+    background-color: #cc0000;
+  }
+  
   
   .divinput {
     display: flex;

@@ -10,6 +10,7 @@ const Update = () => {
   const [adet, setAdet] = useState("");
   const [item, setItem] = useState(null);
   const [scanning, setScanning] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (scanning) {
@@ -39,18 +40,27 @@ const Update = () => {
       alert("Lütfen barkod giriniz.");
       return;
     }
+    setLoading(true);
     try {
       const response = await axios.post(
         "https://barkod-v2.onrender.com/serverapp/bul",
         { barkod },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
-      setItem(response.data.item);
-      setIsim(response.data.item.isim || "");
-      setAdet(response.data.item.adet || "");
-      setFiyat(response.data.item.fiyat || "");
+
+      if (response.data.item) {
+        setItem(response.data.item);
+        setIsim(response.data.item.isim || "");
+        setAdet(response.data.item.adet || "");
+        setFiyat(response.data.item.fiyat || "");
+      } else {
+        alert("Ürün bulunamadı.");
+      }
     } catch (error) {
+      console.error("Error fetching data:", error);
       alert("Ürün bulunamadı.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,6 +85,7 @@ const Update = () => {
         alert("Güncelleme başarılı!");
       }
     } catch (error) {
+      console.error("Error updating data:", error);
       alert(error.response?.data || "Sunucu hatası.");
     } finally {
       setBarkod("");
@@ -93,6 +104,7 @@ const Update = () => {
                 type="text"
                 placeholder="Barkod"
                 className="input"
+                value={barkod}
               />
               <button
                 type="button"
@@ -138,10 +150,11 @@ const Update = () => {
             </div>
 
             <button onClick={findData} type="submit" className="button">
-              Bul
+              {loading ? "Yükleniyor..." : "Bul"}
             </button>
           </form>
         </div>
+
         {item && (
           <div className="bul">
             <p className="label">İsim: {item?.isim || "Bilinmiyor"}</p>
@@ -153,7 +166,15 @@ const Update = () => {
             </button>
           </div>
         )}
-        {scanning && <div id="barcode-scanner"></div>}
+
+        {scanning && (
+          <>
+            <div id="barcode-scanner"></div>
+            <button onClick={() => setScanning(false)} className="cancel-button">
+              İptal
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
